@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/acorn_32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/acorn_16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="服务简介与分类服务分类 rpm包默认安装的服务 安装完成后与系统默认值一致  独立的服务 服务在内存中，用户访问直接响应，快但耗费内存资源  基于xinetd的服务 通过xinetd访问其管理的服务（本身不占用内存），优缺点相反    源码包安装 类似第三方    Xinetd服务 ​    xinetd即extended internet daemon，xinetd是新一代的网络守护进程服务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux基础_8.linux服务管理.md">
+<meta property="og:url" content="http://example.com/2020/10/09/linux%E5%9F%BA%E7%A1%80-8-linux%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="mij0lb&#39;s blog">
+<meta property="og:description" content="服务简介与分类服务分类 rpm包默认安装的服务 安装完成后与系统默认值一致  独立的服务 服务在内存中，用户访问直接响应，快但耗费内存资源  基于xinetd的服务 通过xinetd访问其管理的服务（本身不占用内存），优缺点相反    源码包安装 类似第三方    Xinetd服务 ​    xinetd即extended internet daemon，xinetd是新一代的网络守护进程服务">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201009205748.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201009210246.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201009222736.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201009223025.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201009230550.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201010093428.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201010205427.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201010205338.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013120053.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013120054.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013120055.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201010105034.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201010105801.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201010105612.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201010105549.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201010105836.png">
+<meta property="article:published_time" content="2020-10-09T11:10:38.000Z">
+<meta property="article:modified_time" content="2020-10-13T04:58:28.447Z">
+<meta property="article:author" content="mij0lb">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201009205748.png">
+
+<link rel="canonical" href="http://example.com/2020/10/09/linux%E5%9F%BA%E7%A1%80-8-linux%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>linux基础_8.linux服务管理.md | mij0lb's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">mij0lb's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">宁静致远</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/09/linux%E5%9F%BA%E7%A1%80-8-linux%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="mij0lb">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mij0lb's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          linux基础_8.linux服务管理.md
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-09 19:10:38" itemprop="dateCreated datePublished" datetime="2020-10-09T19:10:38+08:00">2020-10-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-13 12:58:28" itemprop="dateModified" datetime="2020-10-13T12:58:28+08:00">2020-10-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">linux基础</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <a id="more"></a>
+
+<h2 id="服务简介与分类"><a href="#服务简介与分类" class="headerlink" title="服务简介与分类"></a>服务简介与分类</h2><h3 id="服务分类"><a href="#服务分类" class="headerlink" title="服务分类"></a>服务分类</h3><ul>
+<li><p>rpm包默认安装的服务</p>
+<p>安装完成后与系统默认值一致</p>
+<ul>
+<li><p>独立的服务</p>
+<p>服务在内存中，用户访问直接响应，快但耗费内存资源</p>
+</li>
+<li><p>基于xinetd的服务</p>
+<p>通过xinetd访问其管理的服务（本身不占用内存），优缺点相反</p>
+</li>
+</ul>
+</li>
+<li><p>源码包安装</p>
+<p>类似第三方</p>
+</li>
+</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lsgxeva/p/9280777.html"><strong>Xinetd服务</strong></a></p>
+<p>​    xinetd即extended internet daemon，xinetd是新一代的网络守护进程服务程序，又叫超级Internet服务器。经常用来管理多种轻量级Internet服务。xinetd提供类似于inetd+tcp_wrapper的功能，但是更加强大和安全。</p>
+</blockquote>
+<h3 id="查询已安装服务"><a href="#查询已安装服务" class="headerlink" title="查询已安装服务"></a>查询已安装服务</h3><h4 id="查看自启动状态（可附带查看所有已安装rpm包服务）"><a href="#查看自启动状态（可附带查看所有已安装rpm包服务）" class="headerlink" title="查看自启动状态（可附带查看所有已安装rpm包服务）"></a>查看自启动状态（可附带查看所有已安装rpm包服务）</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">chkconfig --list		#查看服务自启动状态，限rpm包安装服务</span><br><span class="line">-------------------</span><br><span class="line"></span><br><span class="line">netconsole      0:off   1:off   2:off   3:off   4:off   5:off   6:off</span><br><span class="line">network         0:off   1:off   2:on    3:on    4:on    5:on    6:off</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>0~6：关机，单用户，不完全多用户，字符界面，未分配，重启</li>
+<li>2~5：on，不代表已经启动，指下次运行或重启系统时服务自启动</li>
+</ul>
+<h4 id="查看已启动服务"><a href="#查看已启动服务" class="headerlink" title="查看已启动服务"></a>查看已启动服务</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -aux|grep crond</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -tuln</span><br></pre></td></tr></table></figure>
+
+<p>缺点：netstat无法查看守护进程（没有端口）</p>
+<h4 id="源码包安装服务"><a href="#源码包安装服务" class="headerlink" title="源码包安装服务"></a>源码包安装服务</h4><p>查看服务安装位置，一般在/usr/local下</p>
+<h3 id="RPM安装服务与源码安装服务区别"><a href="#RPM安装服务与源码安装服务区别" class="headerlink" title="RPM安装服务与源码安装服务区别"></a>RPM安装服务与源码安装服务区别</h3><ul>
+<li><p>安装位置不同（导致管理方法不同）</p>
+<ul>
+<li>源码包安装在指定位置，一般是/usr/local</li>
+<li>rpm包安装在默认位置，/etc（配置文件）    <pre><code>             /etc/.rc.d/init.d(启动脚本)        约定俗成</code></pre>
+</li>
+</ul>
+</li>
+<li><p>删除</p>
+<ul>
+<li>rpm  需要-e选项，安装包到处都是</li>
+<li>源码包，直接删除指定位置文件，不会有垃圾信息</li>
+</ul>
+</li>
+</ul>
+<p>service可启动rpm包安装的服务</p>
+<h2 id="RPM包安装服务的管理"><a href="#RPM包安装服务的管理" class="headerlink" title="RPM包安装服务的管理"></a>RPM包安装服务的管理</h2><h4 id="文件位置"><a href="#文件位置" class="headerlink" title="文件位置"></a>文件位置</h4><h5 id="通用位置"><a href="#通用位置" class="headerlink" title="通用位置"></a>通用位置</h5><p>/etc/rc.d/init.d启动脚本位置（独立）<br>/etc/init.d:启动脚本位置（独立同上，均为软连接）<br>/etc/sysconfig:初始化环境配置文件位置<br>/etc/:默认配置文件</p>
+<p>/etc/xinetd.d服务的启动脚本<br>/etc/xinetd.conf：xinetd配置文件<br>/var/lib:服务产生数据的位置<br>/var/log/:日志</p>
+<h5 id="特殊位置-约定俗成"><a href="#特殊位置-约定俗成" class="headerlink" title="特殊位置-约定俗成"></a>特殊位置-约定俗成</h5><p>/var/www/html</p>
+<h3 id="独立服务"><a href="#独立服务" class="headerlink" title="独立服务"></a>独立服务</h3><h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/etc/inid.d/服务文件名 start|stop|restart|status		#status指查看启动状态</span><br><span class="line"></span><br><span class="line">service 独立服务名 start|stop|restart|status		#到目录下寻找，redhat专有命令，简化操作</span><br><span class="line">service --status-all	#列出系统所有rpm安装的服务启动状态</span><br></pre></td></tr></table></figure>
+
+<h4 id="自启动"><a href="#自启动" class="headerlink" title="自启动"></a>自启动</h4><h5 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chkconfig --level 2345 httpd on|off		#设置自启动，设置完成后目前服务不一定启动</span><br><span class="line">chkconfig  httpd on|off			#级别默认</span><br></pre></td></tr></table></figure>
+
+<h5 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h5><p>修改文件<code>/etc/rc.d/rc.local</code>(系统启动后，所有启动程序运行完成后输入用户名密码前，读取文件)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/inid.d/服务文件名 start			#添加</span><br></pre></td></tr></table></figure>
+
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201009205748.png" alt="image-20201009205748160" style="zoom:50%;" />
+
+<p>touch：第一次-新建文件，第二/n次：修改文件最后修改时间</p>
+<h5 id="方法3"><a href="#方法3" class="headerlink" title="方法3"></a>方法3</h5><p>使用ntsysv命令管理自启动，可管理独立/xinetd服务即rpm包服务，源码包服务默认不可设定</p>
+<p>（rethat专有命令）</p>
+<p>加<em>：自启动，去\</em>:取消自启动</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201009210246.png" alt="image-20201009210246881" style="zoom:50%;" />
+
+<p>推荐<strong>方法2</strong>。陌生服务器，打开文件即可知道系统自启动哪些服务；有助于源码包和rpm包统一管理，避免chkconfig和配置文件之间设置产生冲突</p>
+<h3 id="xinetd"><a href="#xinetd" class="headerlink" title="xinetd"></a>xinetd</h3><h4 id="xinetd启动守护进程"><a href="#xinetd启动守护进程" class="headerlink" title="xinetd启动守护进程"></a>xinetd启动守护进程</h4><p>最适合的应该是那些常用的网络服务，同时，这个服务的请求数目和频繁程度不会太高。系统默认使用xinetd的服务可以分为如下几类。</p>
+<ul>
+<li>标准Internet服务：telnet、ftp。</li>
+<li>信息服务：finger、netstat、systat。</li>
+<li>邮件服务：imap、imaps、pop2、pop3、pops。</li>
+<li>RPC服务：rquotad、rstatd、rusersd、sprayd、walld。</li>
+<li>BSD服务：comsat、exec、login、ntalk、shell、talk</li>
+<li>内部服务：chargen、daytime、echo、servers、services、time。</li>
+<li>安全服务：irc。</li>
+<li>其他服务：name、tftp、uucp。</li>
+</ul>
+<p>具体使用xinetd的服务可在/etc/services文件中指出</p>
+<h4 id="启动-1"><a href="#启动-1" class="headerlink" title="启动"></a>启动</h4><p>基于<code>xinetd</code>的服务越来越少（eg.不安全的远管telnet-server,sync网络备份)，默认未安装<code>xinetd</code>服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum -y install xinetd</span><br><span class="line">yun -y install telnet-server</span><br></pre></td></tr></table></figure>
+
+<p>检测是否安装</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201009222736.png" alt="image-20201009222736076" style="zoom:50%;" />
+
+<p>启用服务,Telnet，xinetd和telnet服务安装完成后是默认禁用（disbale）的。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable xinetd.service			#同时开机自启动</span><br><span class="line"></span><br><span class="line">systemctl enable telnet.socket</span><br></pre></td></tr></table></figure>
+
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201009223025.png" alt="image-20201009223025188" style="zoom:67%;" />
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/xinetd.d/telnet</span><br><span class="line"><span class="meta">#</span><span class="bash">不存在可自行创建</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">服务名称</span></span><br><span class="line"><span class="meta">#</span><span class="bash">将语句 <span class="built_in">disable</span> = yes 改成 <span class="built_in">disable</span> = no 保存退出。激活 telnet 服务</span></span><br><span class="line"><span class="meta">#</span><span class="bash">标志位REUSE，TCP/IP socket可重用</span></span><br><span class="line"><span class="meta">#</span><span class="bash">使用tcp协议数据包，流数据</span></span><br><span class="line"><span class="meta">#</span><span class="bash">允许多个连接同时连接</span></span><br><span class="line"><span class="meta">#</span><span class="bash">启动服务用户为root</span></span><br><span class="line"><span class="meta">#</span><span class="bash">服务的启动程序</span></span><br><span class="line"><span class="meta">#</span><span class="bash">登陆失败后，记录用户UID</span></span><br><span class="line">service telnet</span><br><span class="line">&#123;</span><br><span class="line">	disable = no</span><br><span class="line">	flags = REUSE</span><br><span class="line">	socket_type = stream</span><br><span class="line">	wait = no</span><br><span class="line">	user = root</span><br><span class="line">	server = /usr/sbin/in.telnetd</span><br><span class="line">	log_on_failure += USERID</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重启xinetd</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">service xinetd restart</span><br><span class="line">或者</span><br><span class="line">systemctl restart xinetd.service		#重新启动xinetd服务</span><br></pre></td></tr></table></figure>
+<p>启动服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start telnet.socket</span><br><span class="line">systemctl status telnet.socket</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig --list</span><br></pre></td></tr></table></figure>
+
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201009230550.png" alt="image-20201009230550400" style="zoom: 50%;" />
+
+<h4 id="自启动-1"><a href="#自启动-1" class="headerlink" title="自启动"></a>自启动</h4><h5 id="方法1-1"><a href="#方法1-1" class="headerlink" title="方法1"></a>方法1</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig telnet on</span><br></pre></td></tr></table></figure>
+
+<p>实际上xinetd启动和自启动通用</p>
+<h5 id="方法2-1"><a href="#方法2-1" class="headerlink" title="方法2"></a>方法2</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ntsysv</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="源码包安装服务的管理"><a href="#源码包安装服务的管理" class="headerlink" title="源码包安装服务的管理"></a>源码包安装服务的管理</h3><h4 id="启动-2"><a href="#启动-2" class="headerlink" title="启动"></a>启动</h4><p>绝对路径调用启动脚本，不通过源码包启动脚本位置不同</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/apache2/bin/apachectl start|stop</span><br></pre></td></tr></table></figure>
+<p>查看源码包安装方法/源码包需要手动下载</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201010093428.png" alt="image-20201010093421853" style="zoom:67%;" />
+
+<p>进入解压后的安装包，查看启动方式</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201010205427.png" alt="image-20201010205427542" style="zoom: 50%;" />
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PREFIX- 变量，指安装位置，可以随意指定默认/usr/local</span><br><span class="line">安装位置/bin/apachectl start</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201010205338.png" alt="image-20201010205338255"></p>
+<p>报错不影响</p>
+<p>如果用<code>service httpd start</code>启动源码包安装，报错80端口冲突</p>
+<p><img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013120053.png" alt="image-20201010095949291"></p>
+<h4 id="自启动-2"><a href="#自启动-2" class="headerlink" title="自启动"></a>自启动</h4><p>类似rpm包安装的服务自启动，修改文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/rc.d/rc.local		加入</span><br><span class="line">/usr/local/apache2/bin/apachectl start</span><br></pre></td></tr></table></figure>
+
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013120054.png" alt="image-20201010100611407" style="zoom:67%;" />
+
+
+<h3 id="命令通用"><a href="#命令通用" class="headerlink" title="命令通用"></a>命令通用</h3><h4 id="源码包服务被服务管理命令-service-识别"><a href="#源码包服务被服务管理命令-service-识别" class="headerlink" title="源码包服务被服务管理命令(service)识别"></a>源码包服务被服务管理命令(service)识别</h4><p>软连接到init.d</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s &#x2F;us&#x2F;local&#x2F;apache2&#x2F;bin&#x2F;apachectl &#x2F;etc&#x2F;init.d&#x2F;apache</span><br></pre></td></tr></table></figure>
+
+<p>service命令归根结底是在搜索库/etc/init.d</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013120055.png" alt="image-20201010100841976" style="zoom:67%;" />
+
+<p>该目录下均为rpm包安装的服务</p>
+<h4 id="源码包apache服务能被chkconfig与ntsysv命令管理自启动"><a href="#源码包apache服务能被chkconfig与ntsysv命令管理自启动" class="headerlink" title="源码包apache服务能被chkconfig与ntsysv命令管理自启动"></a>源码包apache服务能被chkconfig与ntsysv命令管理自启动</h4><p><img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201010105034.png" alt="image-20201010105034736"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> vi /etc/init.d/apache</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> chkconfig:35 86 76</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 指定运行顺序，启动顺序，关闭顺序		不能与系统现有顺序冲突</span></span><br><span class="line"><span class="meta">#</span><span class="bash">description:<span class="built_in">source</span> package apache</span></span><br><span class="line"><span class="meta">#</span><span class="bash">说明</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201010105801.png" alt="image-20201010105801671"></p>
+<p>查看系统现有顺序</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201010105612.png" alt="image-20201010105612164" style="zoom:67%;" />
+
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201010105549.png" alt="image-20201010105548959" style="zoom: 80%;" />
+
+<p>查看状态，自启动</p>
+<p><img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201010105836.png" alt="image-20201010105836681"></p>
+<h2 id="服务管理总结"><a href="#服务管理总结" class="headerlink" title="服务管理总结"></a>服务管理总结</h2><h4 id="rpm包安装的服务"><a href="#rpm包安装的服务" class="headerlink" title="rpm包安装的服务"></a>rpm包安装的服务</h4><h5 id="启动-3"><a href="#启动-3" class="headerlink" title="启动"></a>启动</h5><p>均可使用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service 服务名 start|stop|restart</span><br></pre></td></tr></table></figure>
+
+<p><code>xinetd</code> 服务本身也可以用service，其包含的服务需要用<code>systemctl </code>, 例如</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start|restart|stop (服务名)sshd.service</span><br></pre></td></tr></table></figure>
+
+<p>启用/禁用服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable xinetd.service			#同时开机自启动</span><br><span class="line">systemctl disable xinetd.service			</span><br></pre></td></tr></table></figure>
+
+<h5 id="自启动-独立服务"><a href="#自启动-独立服务" class="headerlink" title="自启动(独立服务)"></a>自启动(独立服务)</h5><p><code>chkconfig修权限</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig  httpd on|off			#级别默认</span><br></pre></td></tr></table></figure>
+
+<p>修改文件 <code>/etc/rc.d/rc.local</code>,加入</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/inid.d/服务文件名 start			#添加</span><br></pre></td></tr></table></figure>
+
+<p><code>ntsysv</code>命令，[+-]*</p>
+<h5 id="自启动-xinetd"><a href="#自启动-xinetd" class="headerlink" title="自启动(xinetd)"></a>自启动(xinetd)</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig telnet(服务名) on</span><br></pre></td></tr></table></figure>
+
+<p><code>ntsysv</code>命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable xinetd.service</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="源码包安装的服务"><a href="#源码包安装的服务" class="headerlink" title="源码包安装的服务"></a>源码包安装的服务</h4><h5 id="启动-4"><a href="#启动-4" class="headerlink" title="启动"></a>启动</h5><p>绝对路径调用启动脚本(启动方法可在安装文件中的INSTALL中查看)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/apache2/bin/apachectl start|stop</span><br></pre></td></tr></table></figure>
+
+<h5 id="自启动-3"><a href="#自启动-3" class="headerlink" title="自启动"></a>自启动</h5><p>修改文件<code>vi /etc/rc.d/rc.local    </code></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>mij0lb
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2020/10/09/linux%E5%9F%BA%E7%A1%80-8-linux%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/" title="linux基础_8.linux服务管理.md">http://example.com/2020/10/09/linux基础-8-linux服务管理/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/10/09/vmware-nat%E6%A8%A1%E5%BC%8F%E9%9D%99%E6%80%81ip%E9%85%8D%E7%BD%AE/" rel="next" title="vmware-nat模式静态ip配置">
+      vmware-nat模式静态ip配置 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%88%86%E7%B1%BB"><span class="nav-number">1.</span> <span class="nav-text">服务简介与分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%88%86%E7%B1%BB"><span class="nav-number">1.1.</span> <span class="nav-text">服务分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E5%B7%B2%E5%AE%89%E8%A3%85%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.2.</span> <span class="nav-text">查询已安装服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%87%AA%E5%90%AF%E5%8A%A8%E7%8A%B6%E6%80%81%EF%BC%88%E5%8F%AF%E9%99%84%E5%B8%A6%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E5%B7%B2%E5%AE%89%E8%A3%85rpm%E5%8C%85%E6%9C%8D%E5%8A%A1%EF%BC%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">查看自启动状态（可附带查看所有已安装rpm包服务）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%B7%B2%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.2.2.</span> <span class="nav-text">查看已启动服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E5%8C%85%E5%AE%89%E8%A3%85%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.2.3.</span> <span class="nav-text">源码包安装服务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RPM%E5%AE%89%E8%A3%85%E6%9C%8D%E5%8A%A1%E4%B8%8E%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85%E6%9C%8D%E5%8A%A1%E5%8C%BA%E5%88%AB"><span class="nav-number">1.3.</span> <span class="nav-text">RPM安装服务与源码安装服务区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RPM%E5%8C%85%E5%AE%89%E8%A3%85%E6%9C%8D%E5%8A%A1%E7%9A%84%E7%AE%A1%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">RPM包安装服务的管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E4%BD%8D%E7%BD%AE"><span class="nav-number">2.0.1.</span> <span class="nav-text">文件位置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E4%BD%8D%E7%BD%AE"><span class="nav-number">2.0.1.1.</span> <span class="nav-text">通用位置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E4%BD%8D%E7%BD%AE-%E7%BA%A6%E5%AE%9A%E4%BF%97%E6%88%90"><span class="nav-number">2.0.1.2.</span> <span class="nav-text">特殊位置-约定俗成</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8B%AC%E7%AB%8B%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.1.</span> <span class="nav-text">独立服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8"><span class="nav-number">2.1.1.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%90%AF%E5%8A%A8"><span class="nav-number">2.1.2.</span> <span class="nav-text">自启动</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%B9%E6%B3%951"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">方法1</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%B9%E6%B3%952"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">方法2</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%B9%E6%B3%953"><span class="nav-number">2.1.2.3.</span> <span class="nav-text">方法3</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xinetd"><span class="nav-number">2.2.</span> <span class="nav-text">xinetd</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#xinetd%E5%90%AF%E5%8A%A8%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B"><span class="nav-number">2.2.1.</span> <span class="nav-text">xinetd启动守护进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%90%AF%E5%8A%A8-1"><span class="nav-number">2.2.3.</span> <span class="nav-text">自启动</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%B9%E6%B3%951-1"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">方法1</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%B9%E6%B3%952-1"><span class="nav-number">2.2.3.2.</span> <span class="nav-text">方法2</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E5%8C%85%E5%AE%89%E8%A3%85%E6%9C%8D%E5%8A%A1%E7%9A%84%E7%AE%A1%E7%90%86"><span class="nav-number">2.3.</span> <span class="nav-text">源码包安装服务的管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8-2"><span class="nav-number">2.3.1.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%90%AF%E5%8A%A8-2"><span class="nav-number">2.3.2.</span> <span class="nav-text">自启动</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E9%80%9A%E7%94%A8"><span class="nav-number">2.4.</span> <span class="nav-text">命令通用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E5%8C%85%E6%9C%8D%E5%8A%A1%E8%A2%AB%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4-service-%E8%AF%86%E5%88%AB"><span class="nav-number">2.4.1.</span> <span class="nav-text">源码包服务被服务管理命令(service)识别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E5%8C%85apache%E6%9C%8D%E5%8A%A1%E8%83%BD%E8%A2%ABchkconfig%E4%B8%8Entsysv%E5%91%BD%E4%BB%A4%E7%AE%A1%E7%90%86%E8%87%AA%E5%90%AF%E5%8A%A8"><span class="nav-number">2.4.2.</span> <span class="nav-text">源码包apache服务能被chkconfig与ntsysv命令管理自启动</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">服务管理总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#rpm%E5%8C%85%E5%AE%89%E8%A3%85%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="nav-number">3.0.1.</span> <span class="nav-text">rpm包安装的服务</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8-3"><span class="nav-number">3.0.1.1.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%87%AA%E5%90%AF%E5%8A%A8-%E7%8B%AC%E7%AB%8B%E6%9C%8D%E5%8A%A1"><span class="nav-number">3.0.1.2.</span> <span class="nav-text">自启动(独立服务)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%87%AA%E5%90%AF%E5%8A%A8-xinetd"><span class="nav-number">3.0.1.3.</span> <span class="nav-text">自启动(xinetd)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E5%8C%85%E5%AE%89%E8%A3%85%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="nav-number">3.0.2.</span> <span class="nav-text">源码包安装的服务</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8-4"><span class="nav-number">3.0.2.1.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%87%AA%E5%90%AF%E5%8A%A8-3"><span class="nav-number">3.0.2.2.</span> <span class="nav-text">自启动</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">mij0lb</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mij0lb</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
