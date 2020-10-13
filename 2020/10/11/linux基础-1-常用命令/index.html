@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+
+  <meta name="description" content="常用命令目录处理命令ls     12345ls  []		-a	显示隐藏文件   	-h	人性化阅读，文件大小转为MB&#x2F;GB，原为数据块   	-l	相当于ll，长列表类型展示文件信息   	-d	显示目录   ls命令查询得到的文件大小部分 文件–文件大小 目录–目录文件名占用的字节数，并非目录内数据大小   ls -al 和 ls -alh     ls -dl lib">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux基础_1.常用命令">
+<meta property="og:url" content="http://example.com/2020/10/11/linux%E5%9F%BA%E7%A1%80-1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:site_name" content="mij0lb&#39;s blog">
+<meta property="og:description" content="常用命令目录处理命令ls     12345ls  []		-a	显示隐藏文件   	-h	人性化阅读，文件大小转为MB&#x2F;GB，原为数据块   	-l	相当于ll，长列表类型展示文件信息   	-d	显示目录   ls命令查询得到的文件大小部分 文件–文件大小 目录–目录文件名占用的字节数，并非目录内数据大小   ls -al 和 ls -alh     ls -dl lib">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011104521.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011104543.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011105048.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011104656.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011105801.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011110231.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011110430.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011110802.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011111141.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011111700.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011111737.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011113105.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011113204.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011120135.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011120136.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011121001.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011131402.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011123658.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011123815.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011125422.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011133439.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011131601.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011133006.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011130126.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011130016.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011130409.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011134435.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011135149.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011134759.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011135639.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011140110.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011140540.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011141309.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011141629.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011143004.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011143053.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011143621.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011143214.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011151728.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011145017.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011145106.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011144849.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013120155.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011145838.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011145947.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011150308.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011150414.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011150533.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011152119.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011152229.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011152615.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011152840.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011153143.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011153242.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011153520.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011153920.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011154058.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011155252.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011155409.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011155537.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011155649.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011155808.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011160305.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011160458.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011160640.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011164547.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011165011.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011165207.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011170701.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011170829.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011171124.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011171433.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011171904.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011172039.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011172315.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011173835.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011174044.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011174120.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011174214.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011174622.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011175340.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011175643.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011174758.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011180006.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011185213.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011180952.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011183437.png">
+<meta property="article:published_time" content="2020-10-11T01:21:08.000Z">
+<meta property="article:modified_time" content="2020-10-13T04:02:02.223Z">
+<meta property="article:author" content="mij0lb">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011104521.png">
+
+
+<link rel="canonical" href="http://example.com/2020/10/11/linux%E5%9F%BA%E7%A1%80-1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>linux基础_1.常用命令 | mij0lb's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+	<a target="_blank" rel="noopener" href="https://github.com/mij0lb" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">mij0lb's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">宁静致远</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">1.</span> <span class="nav-text">常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E5%A4%84%E7%90%86%E5%91%BD%E4%BB%A4"><span class="nav-number">1.1.</span> <span class="nav-text">目录处理命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ls"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">ls</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mkdir%E5%92%8Crmdir"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">mkdir和rmdir</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pwd%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">pwd显示当前目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cp%E6%8B%B7%E8%B4%9D"><span class="nav-number">1.1.0.4.</span> <span class="nav-text">cp拷贝</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rm"><span class="nav-number">1.1.0.5.</span> <span class="nav-text">rm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ln%E9%93%BE%E6%8E%A5"><span class="nav-number">1.1.0.6.</span> <span class="nav-text">ln链接</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A1%AC%E9%93%BE%E6%8E%A5%E5%AE%9E%E4%BE%8B"><span class="nav-number">1.1.0.6.1.</span> <span class="nav-text">创建一个硬链接实例</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E8%BD%AF%E9%93%BE%E6%8E%A5%E5%AE%9E%E4%BE%8B"><span class="nav-number">1.1.0.6.2.</span> <span class="nav-text">创建一个软链接实例</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E4%BD%9C%E7%94%A8"><span class="nav-number">1.1.0.7.</span> <span class="nav-text">目录作用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text">文件处理命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#find"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">find</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%87%E4%BB%B6name%E6%88%96%E6%AD%A3%E5%88%99%E5%8C%B9%E9%85%8Dregex"><span class="nav-number">1.2.0.1.1.</span> <span class="nav-text">文件name或正则匹配regex</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%B9%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%8C%B9%E9%85%8Dtype"><span class="nav-number">1.2.0.1.2.</span> <span class="nav-text">根据类型匹配type</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%B9%E6%8D%AE%E6%96%87%E4%BB%B6%E5%A4%A7%E5%B0%8F%E5%8C%B9%E9%85%8Dsize"><span class="nav-number">1.2.0.1.3.</span> <span class="nav-text">根据文件大小匹配size</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%97%B6%E9%97%B4%E6%88%B3%E6%A3%80%E7%B4%A2-a-c-m-min-time"><span class="nav-number">1.2.0.1.4.</span> <span class="nav-text">文件时间戳检索[a&#x2F;c&#x2F;m]min&#x2F;time</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E5%8C%B9%E9%85%8D%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.0.1.5.</span> <span class="nav-text">删除匹配文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%B9%E6%8D%AEperm-%E6%9D%83%E9%99%90-user-group%E5%8C%B9%E9%85%8D"><span class="nav-number">1.2.0.1.6.</span> <span class="nav-text">根据perm(权限),user,group匹配</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E6%96%87%E4%BB%B6%E5%90%8E%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4-exec-ok"><span class="nav-number">1.2.0.1.7.</span> <span class="nav-text">搜索文件后执行命令 exec&#x2F;ok</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#empty%E6%90%9C%E7%B4%A2%E7%A9%BA%E6%96%87%E4%BB%B6-%E7%9B%AE%E5%BD%95"><span class="nav-number">1.2.0.1.8.</span> <span class="nav-text">empty搜索空文件&#x2F;目录</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#locate"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">locate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#whereis"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">whereis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#which"><span class="nav-number">1.2.0.4.</span> <span class="nav-text">which</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#grep"><span class="nav-number">1.2.0.5.</span> <span class="nav-text">grep</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#grep%E8%A7%84%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AF%B4%E6%98%8E"><span class="nav-number">1.2.0.5.1.</span> <span class="nav-text">grep规则表达式说明</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B"><span class="nav-number">1.2.0.5.2.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4"><span class="nav-number">1.3.</span> <span class="nav-text">权限管理命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#chmod"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">chmod</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chown"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">chown</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chgrp-%E6%94%B9%E5%8F%98%E6%96%87%E4%BB%B6%E6%89%80%E5%B1%9E%E7%BB%84"><span class="nav-number">1.3.0.3.</span> <span class="nav-text">chgrp   改变文件所属组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#umask-%E6%9F%A5%E7%9C%8B%E8%AE%BE%E7%BD%AE%E7%BC%BA%E7%9C%81%E6%9D%83%E9%99%90"><span class="nav-number">1.3.0.4.</span> <span class="nav-text">umask 查看设置缺省权限</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%AE%E5%8A%A9%E5%91%BD%E4%BB%A4"><span class="nav-number">1.4.</span> <span class="nav-text">帮助命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#man"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">man</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#whatis"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">whatis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#apropos"><span class="nav-number">1.4.0.3.</span> <span class="nav-text">apropos</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%93help-%E6%9F%A5%E7%9C%8B%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9"><span class="nav-number">1.4.0.4.</span> <span class="nav-text">–help 查看常用选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#info"><span class="nav-number">1.4.0.5.</span> <span class="nav-text">info</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#help"><span class="nav-number">1.4.0.6.</span> <span class="nav-text">help</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#date%E4%B8%8Eman-date"><span class="nav-number">1.4.0.7.</span> <span class="nav-text">date与man date</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4"><span class="nav-number">1.5.</span> <span class="nav-text">用户管理命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#useradd-amp-passwd"><span class="nav-number">1.5.0.1.</span> <span class="nav-text">useradd&amp;passwd</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#who"><span class="nav-number">1.5.0.2.</span> <span class="nav-text">who</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#w-%E8%AF%A6%E7%BB%86%E7%89%88who"><span class="nav-number">1.5.0.3.</span> <span class="nav-text">w(详细版who)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%8E%8B%E7%BC%A9%E5%91%BD%E4%BB%A4"><span class="nav-number">1.6.</span> <span class="nav-text">解压缩命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#gzip-%E5%8E%8B%E7%BC%A9%E7%8E%87%E5%A4%A7"><span class="nav-number">1.6.0.1.</span> <span class="nav-text">gzip    (压缩率大)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tar"><span class="nav-number">1.6.0.2.</span> <span class="nav-text">tar</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zip"><span class="nav-number">1.6.0.3.</span> <span class="nav-text">zip</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bzip2"><span class="nav-number">1.6.0.4.</span> <span class="nav-text">bzip2</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%91%BD%E4%BB%A4"><span class="nav-number">1.7.</span> <span class="nav-text">网络命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#write-%E7%94%A8%E6%88%B7%E5%90%8D"><span class="nav-number">1.7.0.1.</span> <span class="nav-text">write 用户名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#wall-%E5%B9%BF%E6%92%AD"><span class="nav-number">1.7.0.2.</span> <span class="nav-text">wall 广播</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ping"><span class="nav-number">1.7.0.3.</span> <span class="nav-text">ping</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ifconfig%E6%9F%A5%E7%9C%8B%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF"><span class="nav-number">1.7.0.4.</span> <span class="nav-text">ifconfig查看网卡配置信息</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E5%85%B3%E9%97%AD%E6%8C%87%E5%AE%9A%E7%BD%91%E5%8D%A1"><span class="nav-number">1.7.0.4.1.</span> <span class="nav-text">启动关闭指定网卡</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BA%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AEip%E5%9C%B0%E5%9D%80"><span class="nav-number">1.7.0.4.2.</span> <span class="nav-text">为网卡配置ip地址</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BA%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE%E5%92%8C%E5%88%A0%E9%99%A4ipv6%E5%9C%B0%E5%9D%80"><span class="nav-number">1.7.0.4.3.</span> <span class="nav-text">为网卡配置和删除ipv6地址</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9Mac%E5%9C%B0%E5%9D%80"><span class="nav-number">1.7.0.4.4.</span> <span class="nav-text">修改Mac地址</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mail"><span class="nav-number">1.7.0.5.</span> <span class="nav-text">mail</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#last-%E7%9B%AE%E5%89%8D%E4%B8%8E%E8%BF%87%E5%8E%BB%E7%99%BB%E5%85%A5%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF"><span class="nav-number">1.7.0.6.</span> <span class="nav-text">last 目前与过去登入系统的用户信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lastlog%E7%89%B9%E5%AE%9A%E7%94%A8%E6%88%B7%E7%99%BB%E9%99%86%E6%97%B6%E9%97%B4"><span class="nav-number">1.7.0.7.</span> <span class="nav-text">lastlog特定用户登陆时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#traceroute"><span class="nav-number">1.7.0.8.</span> <span class="nav-text">traceroute</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#netstat"><span class="nav-number">1.7.0.9.</span> <span class="nav-text">netstat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#setup-%E9%85%8D%E7%BD%AE%E7%BD%91%E7%BB%9C-nmtui"><span class="nav-number">1.7.0.10.</span> <span class="nav-text">setup 配置网络 nmtui</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mount-t%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F-%E8%AE%BE%E5%A4%87%E6%96%87%E4%BB%B6%E5%90%8D"><span class="nav-number">1.7.0.11.</span> <span class="nav-text">mount [-t文件系统]  设备文件名</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E6%9C%BA%E9%87%8D%E5%90%AF%E5%91%BD%E4%BB%A4"><span class="nav-number">1.8.</span> <span class="nav-text">关机重启命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#shutdown"><span class="nav-number">1.8.0.1.</span> <span class="nav-text">shutdown</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#halt"><span class="nav-number">1.8.0.2.</span> <span class="nav-text">halt</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#poweroff"><span class="nav-number">1.8.0.3.</span> <span class="nav-text">poweroff</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#logout"><span class="nav-number">1.8.0.4.</span> <span class="nav-text">logout</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reboot"><span class="nav-number">1.8.0.5.</span> <span class="nav-text">reboot</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#init-0%E5%92%8Cinit-6"><span class="nav-number">1.8.0.6.</span> <span class="nav-text">init 0和init 6</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%B0%8F%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="nav-number">1.9.</span> <span class="nav-text">其他小问题：</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">mij0lb</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/11/linux%E5%9F%BA%E7%A1%80-1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="mij0lb">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mij0lb's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          linux基础_1.常用命令
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-10-11 09:21:08" itemprop="dateCreated datePublished" datetime="2020-10-11T09:21:08+08:00">2020-10-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-10-13 12:02:02" itemprop="dateModified" datetime="2020-10-13T12:02:02+08:00">2020-10-13</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/linux%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">linux基础</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><h2 id="目录处理命令"><a href="#目录处理命令" class="headerlink" title="目录处理命令"></a>目录处理命令</h2><h4 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h4><img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011104521.png" alt="image-20201011104521670" style="zoom: 50%;" />
+
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ls  []</span><br><span class="line">		-a	显示隐藏文件</span><br><span class="line">   	-h	人性化阅读，文件大小转为MB&#x2F;GB，原为数据块</span><br><span class="line">   	-l	相当于ll，长列表类型展示文件信息</span><br><span class="line">   	-d	显示目录</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>ls命令查询得到的文件大小部分</p>
+<p>文件–文件大小</p>
+<p>目录–目录文件名占用的字节数，并非目录内数据大小</p>
+</li>
+</ul>
+<p><code>ls -al </code>和 <code>ls -alh</code></p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011104543.png" alt="image-20201011104543195" style="zoom: 45%;" />
+
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011105048.png" alt="image-20201011105048302" style="zoom:48%;" />
+
+<p><code>ls -dl lib    </code>    以长列表形式显示目录lib</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011104656.png" alt="image-20201011104656879" style="zoom:58%;" />
+
+
+<h4 id="mkdir和rmdir"><a href="#mkdir和rmdir" class="headerlink" title="mkdir和rmdir"></a>mkdir和rmdir</h4>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p 递归创建目录</span><br><span class="line">rmdir 删除目录 </span><br><span class="line">rm -rf  强制删除						</span><br></pre></td></tr></table></figure>
+
+<p><code>mkdir -p test/test1</code>    ，假设test目录不存在，则递归创建，先创建test,再创建test1</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011105801.png" alt="image-20201011105801725" style="zoom:67%;" />
+
+<p>如果目录下有内容，删除父目录会报错</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011110231.png" alt="image-20201011110231944" style="zoom:60%;" />
+
+<p>原可用<code>rmdir -f</code>强制删除，但在centos7中不再支持该选项。不过使用<code>rm -rf</code>也可以达到同样的效果</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011110430.png" alt="image-20201011110430489" style="zoom:60%;" />
+
+
+
+<h4 id="pwd显示当前目录"><a href="#pwd显示当前目录" class="headerlink" title="pwd显示当前目录"></a>pwd显示当前目录</h4><h4 id="cp拷贝"><a href="#cp拷贝" class="headerlink" title="cp拷贝"></a>cp拷贝</h4>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cp	[] 源文件 目标文件路径</span><br><span class="line">		-r	拷贝目录</span><br><span class="line">   	-p	拷贝属性</span><br></pre></td></tr></table></figure>
+
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011110802.png" alt="image-20201011110801998" style="zoom:50%;" />
+
+<p>拷贝目录test到当前路径下<code> cp -r test test1</code></p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011111141.png" alt="image-20201011111141396" style="zoom:50%;" />
+
+<p>但是两个目录属性不同(创建时间不一)，只复制了内容。使用<code>cp -pr test test2</code>拷贝得到</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011111700.png" alt="image-20201011111700328" style="zoom:50%;" />
+
+<p>复制目录不加<code>-r</code>参数会出现如下报错：cp: omitting directory ‘test’</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011111737.png" alt="image-20201011111713682" style="zoom:60%;" />
+
+
+
+<h4 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h4>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm	-r	删除目录</span><br><span class="line">   	-f  强制删除</span><br></pre></td></tr></table></figure>
+
+<h4 id="ln链接"><a href="#ln链接" class="headerlink" title="ln链接"></a>ln链接</h4><blockquote>
+<p>摘自<a target="_blank" rel="noopener" href="https://man.linuxde.net/ln">linux命令大全-ln</a></p>
+<p>Linux具有为一个文件起多个名字的功能，称为链接。被链接的文件可以存放在相同的目录下，但是必须有不同的文件名，而不用在硬盘上为同样的数据重复备份。另外，被链接的文件也可以有相同的文件名，但是存放在不同的目录下，这样只要对一个目录下的该文件进行修改，就可以完成对所有目录下同名链接文件的修改。对于某个文件的各链接文件，我们可以给它们指定不同的存取权限，以控制对信息的共享和增强安全性。文件链接有两种形式，即硬链接和符号链接。</p>
+<p><strong>硬链接</strong></p>
+<p>​        创建硬链接后，己经存在的文件的I节点号（Inode）会被多个目录文件项使用。一个文件的硬链接数可以在目录的长列表格式的第二列中看到，无额外链接的文件的链接数为l。</p>
+<p>​        在默认情况下，ln命令创建硬链接。ln命令会增加链接数，<a target="_blank" rel="noopener" href="http://man.linuxde.net/rm">rm</a>命令会减少链接数。一个文件除非链接数为0，否则不会从文件系统中被物理地删除。</p>
+<p>对硬链接有如下限制：</p>
+<ul>
+<li>不能对目录文件做硬链接。</li>
+<li>不能在不同的文件系统之间做硬链接。就是说，链接文件和被链接文件必须位于同一个文件系统中。</li>
+</ul>
+<p><strong>符号链接/软链接</strong></p>
+<p>符号链接也称为软链接，是将一个路径名链接到一个文件。这些文件是一种特别类型的文件。事实上，它只是一个文本文件（如图中的abc文件），其中包含它提供链接的另一个文件的路径名。另一个文件是实际包含所有数据的文件。所有读、写文件内容的命令被用于符号链接时，将沿着链接方向前进来访问实际的文件。</p>
+<p>​        与硬链接不同的是，符号链接确实是一个新文件，当然它具有不同的I节点号；而硬链接并没有建立新文件。</p>
+<p>​        符号链接没有硬链接的限制，可以对目录文件做符号链接，也可以在不同文件系统之间做符号链接。</p>
+<p>符号链接保持了链接与源文件或目录之间的区别：</p>
+<ul>
+<li>删除源文件或目录，只删除了数据，不会删除链接。一旦以同样文件名创建了源文件，链接将继续指向该文件的新数据。</li>
+<li>在目录长列表中，符号链接作为一种特殊的文件类型显示出来，其第一个字母是l。</li>
+<li>符号链接的大小是其链接文件的路径名中的字节数。</li>
+<li>当用<code>ln -s</code>命令列出文件时，可以看到符号链接名后有一个箭头指向源文件或目录，例如<code>lrwxrwxrwx … 14 jun 20 10:20 /etc/motd-&gt;/original_file</code>其中，表示“文件大小”的数字“14”恰好说明源文件名<code>original_file</code>由14个字符构成。</li>
+</ul>
+</blockquote>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln [选项] target link</span><br><span class="line">   -s 生成软连接，类似win快捷方式，权限ugo均rwx,文件小，删除源文件软链接失效</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>默认无参数时生成硬链接</li>
+<li>target：指定连接的源文件。创建软连接，“源文件”可以是文件或者目录。创建硬连接时，则“源文件”参数只能是文件；</li>
+<li>用<code>ln -s</code>命令建立符号链接时，源文件最好用绝对路径名。这样可以在任何工作目录下进行符号链接。而当源文件用相对路径时，如果当前的工作路径与要创建的符号链接文件所在路径不同，就不能进行链接。</li>
+</ul>
+<h5 id="创建一个硬链接实例"><a href="#创建一个硬链接实例" class="headerlink" title="创建一个硬链接实例"></a>创建一个硬链接实例</h5><p>将目录/root/temp/test下的文件aa链接到/root/temp/test2下的文件bb(执行命令前，bb并不存在)</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011113105.png" alt="image-20201011113105060" style="zoom:50%;" />
+
+<p>查看两个文件aa和bb，-i参数表示显示Node节点号。可见两个文件节点号相同，链接数+1（无额外链接的文件链接数=1），文件类型位置没有特殊标记。</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011113204.png" alt="image-20201011113204473" style="zoom:67%;" />
+
+
+
+<h5 id="创建一个软链接实例"><a href="#创建一个软链接实例" class="headerlink" title="创建一个软链接实例"></a>创建一个软链接实例</h5><p>将目录test1链接到test2下的符号链接文件ab(无需事先创建，执行命令时写明链接文件路径即可)，即使./test2/ab指向目录./test1。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s &#x2F;root&#x2F;temp&#x2F;test1 &#x2F;root&#x2F;temp&#x2F;test2&#x2F;ab</span><br></pre></td></tr></table></figure>
+
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011120135.png" alt="image-20201011115420891" style="zoom:50%;" />
+
+<p>此时test1中存放的文件可通过软链接文件ab访问。但实际上两个目录inode不同，证明符号链接是一个新文件。文件类型为l,代表软链接</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011120136.png" alt="image-20201011115810534" style="zoom:67%;" />
+
+<p>目录内文件inode相同是因为通过ab访问的文件aa的过程就是ab沿着符号链接的方向访问实际目录test1内的aa。</p>
+<h4 id="目录作用"><a href="#目录作用" class="headerlink" title="目录作用"></a>目录作用</h4><img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011121001.png" alt="image-20201011121001014" style="zoom:67%;" />
+
+<table>
+<thead>
+<tr>
+<th align="center">目录</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">/bin/</td>
+<td>从存放系统命令（$#）</td>
+</tr>
+<tr>
+<td align="center">/sbin/</td>
+<td>与系统环境相关的命令（#)</td>
+</tr>
+<tr>
+<td align="center">/usr/</td>
+<td>系统软件资源目录</td>
+</tr>
+<tr>
+<td align="center">/usr/bin/</td>
+<td>存放系统命令（与系统启动无关）</td>
+</tr>
+<tr>
+<td align="center">/usr/sbin/</td>
+<td>根系统文件中不必要的管理命令</td>
+</tr>
+<tr>
+<td align="center">/boot/</td>
+<td>系统启动目录（内核文件，启动引导程序，group文件）</td>
+</tr>
+<tr>
+<td align="center">/dev/</td>
+<td>设备文件保存位置</td>
+</tr>
+<tr>
+<td align="center">/etc/</td>
+<td>配置文件保存位置</td>
+</tr>
+<tr>
+<td align="center">/var/</td>
+<td>动态数据存放位置（缓存，日志，软件运行产生的文件）</td>
+</tr>
+<tr>
+<td align="center">/proc/</td>
+<td>虚拟文件系统，存在内存中，保存系统内核，进程，外部设备状态，网络状态灯<br />eg./proc/cpuinfo    cpu, /proc/devices    设备驱动列表，/proc/filesystem文件系统列表, /proc/net/网络协议</td>
+</tr>
+<tr>
+<td align="center">/sys/</td>
+<td>虚拟文件系统，保存内核相关信息</td>
+</tr>
+<tr>
+<td align="center">/root/</td>
+<td>root用户家目录</td>
+</tr>
+<tr>
+<td align="center">/srv/</td>
+<td>服务数据目录</td>
+</tr>
+<tr>
+<td align="center">/tmp/</td>
+<td>临时存放文件位置，所有用户均可访问</td>
+</tr>
+</tbody></table>
+<h2 id="文件处理命令"><a href="#文件处理命令" class="headerlink" title="文件处理命令"></a>文件处理命令</h2><h4 id="find"><a href="#find" class="headerlink" title="find"></a>find</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">find  目录 条件 文件名</span><br><span class="line">					-name		#名字配合通配符使用，*?</span><br><span class="line">   		 	  -iname		#不区分大小写</span><br><span class="line">   		 	  -a -o			#且 或    </span><br><span class="line">   		  	-size +50M -size -100M	#查找文件&gt;50M且&lt;100M的文件</span><br><span class="line">				  -type f d l</span><br><span class="line">          -inum n		#节点	</span><br><span class="line">					-amin/cmin/mmin				#n分钟前被访问/文件数据元(例如权限)被修改/前曾被修改内容</span><br><span class="line">          -atime 50		#最近50天访问的文件</span><br><span class="line">          -mtime +50 -mtime -100	#查找修改时间&gt;50且&lt;100的文件										</span><br><span class="line">					-perm 0777	#查找权限为777的所有文件</span><br><span class="line">					-user root -name test.c	#查找所有者为root的所有文件,文件名为test.c的所有文件</span><br><span class="line">   				-group	developer   				                </span><br><span class="line">          -empty		#寻找文件大小为0 Byte的文件，或目录下没有任何子目录或文件的空目录</span><br><span class="line">          -exec/ok	#	找出文件后执行指定命令，搭配其他命令使用</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>不指明目录则在当前目录下寻找</li>
+</ul>
+<h5 id="文件name或正则匹配regex"><a href="#文件name或正则匹配regex" class="headerlink" title="文件name或正则匹配regex"></a>文件name或正则匹配regex</h5><p>  <code>find .</code>列出当前目录及子目录下所有文件和文件夹</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011131402.png" alt="image-20201011130829343" style="zoom:50%;" />
+
+<p><code>find / -name init</code>   搜索文件名为init的文件</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011123658.png" alt="image-20201011123658464" style="zoom:55%;" />
+
+<p><code>find / -name *init*</code>    查找文件名中包含init的文件。通配符*，匹配任意个字符</p>
+<p><code>find / -name *init???</code> 查找文件名为 “任意字符+init+三个字符”的文件。通配符？，匹配一个任意字符</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011123815.png" alt="image-20201011123815581" style="zoom:50%;" />
+
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011125422.png" alt="image-20201011125422850" style="zoom:50%;" />
+
+<p><code>find . -name &quot;*.txt&quot; -o -name &quot;*.pdf&quot; </code>当前目录及子目录下查找所有以.txt和.pdf结尾的文件</p>
+<p><code>find . ! -name &quot;*.txt&quot;</code>    当前目录下不以.txt结尾的文件</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011133439.png" alt="image-20201011133439383" style="zoom:50%;" />
+
+<p><code>find /usr/ -path &quot;*local&quot;</code>    匹配文件路径或者文件</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011131601.png" alt="image-20201011131600994" style="zoom:67%;" />
+
+<p><code>find . -regex &quot;.*\(\.txt\|\.pdf\)$&quot;</code>基于正则表达式匹配文件路径，加i可忽略大小写</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011133006.png" alt="image-20201011133006434" style="zoom:67%;" />
+
+<h5 id="根据类型匹配type"><a href="#根据类型匹配type" class="headerlink" title="根据类型匹配type"></a>根据类型匹配type</h5><p>f 文件 d目录 l 链接</p>
+<p><code>find / -name init??? -type f</code>            查找文件名为init+3个任意字符的文件(排除目录)</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011130126.png" alt="image-20201011130126150" style="zoom:50%;" />
+
+<h5 id="根据文件大小匹配size"><a href="#根据文件大小匹配size" class="headerlink" title="根据文件大小匹配size"></a>根据文件大小匹配size</h5><p>b块（512字节）/c字节/w字(字)/k/M/G</p>
+<p>+大于-小于不指明则等于</p>
+<p><code>find / -size +50M -size -100M</code>            搜索/下&gt;50且&lt;100的文件</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011130016.png" alt="image-20201011130015998" style="zoom:50%;" />
+
+<p><code>find / -mtime +50 -mtime -100</code>    查找修改时间&gt;50且&lt;100的文件</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011130409.png" alt="image-20201011130409365" style="zoom:67%;" />
+
+<h5 id="文件时间戳检索-a-c-m-min-time"><a href="#文件时间戳检索-a-c-m-min-time" class="headerlink" title="文件时间戳检索[a/c/m]min/time"></a>文件时间戳检索[a/c/m]min/time</h5><p><strong>访问时间</strong>（-atime/天，-amin/分钟）：用户最近一次访问时间。<br><strong>修改时间</strong>（-mtime/天，-mmin/分钟）：文件最后一次修改时间。<br><strong>变化时间</strong>（-ctime/天，-cmin/分钟）：文件数据元（例如权限等）最后一次修改时间。</p>
+<p>+大于，-小于，不指明即等于</p>
+<p><code>find . -type f -atime 7</code>     搜索恰好在七天前被访问过的所有文件</p>
+<p><code>find . -type f -atime +7</code>    搜索超过七天内被访问过的所有文件</p>
+<p><code>find . -type f -atime -7</code>        搜索最近七天内被访问过的所有文件</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011134435.png" alt="image-20201011134435148" style="zoom:50%;" />
+
+<p><code> find . -type f -amin +50</code>        搜索访问时间超过50分钟的所有文件</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011135149.png" alt="image-20201011135149268" style="zoom:50%;" />
+
+<p><code>find . -type f -newer test/aa</code>        找出比aa修改时间更长/新的所有文件</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011134759.png" style="zoom:50%;" />
+
+<h5 id="删除匹配文件"><a href="#删除匹配文件" class="headerlink" title="删除匹配文件"></a>删除匹配文件</h5><p><code> find . -type f \( -name &quot;*.txt&quot; -o -name &quot;*.pdf&quot; \) -delete</code></p>
+<p>删除当前目录及子目录下查找所有以.txt和.pdf结尾的文件</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011135639.png" alt="image-20201011135638996" style="zoom: 50%;" />
+
+
+
+<h5 id="根据perm-权限-user-group匹配"><a href="#根据perm-权限-user-group匹配" class="headerlink" title="根据perm(权限),user,group匹配"></a>根据perm(权限),user,group匹配</h5><p>当前目录下搜索出权限为777的文件，这里bb是aa的硬链接</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011140110.png" alt="image-20201011140110264" style="zoom:67%;" />
+
+<p> <code>find . -type f -name &quot;*.php&quot; ! -perm 644</code>        找出当前目录下权限不是644的php文件</p>
+<p><code>find . -type f -user jen</code>        找出当前目录用户jen拥有的所有文件</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011140540.png" alt="image-20201011140540426" style="zoom:60%;" />
+
+<p><code>find . -type f -group jen</code>        找出当前目录用户组jen拥有的所有文件</p>
+<h5 id="搜索文件后执行命令-exec-ok"><a href="#搜索文件后执行命令-exec-ok" class="headerlink" title="搜索文件后执行命令 exec/ok"></a>搜索文件后执行命令 exec/ok</h5><p>-ok作用与-exec相同，但是ok需要确认执行的过程</p>
+<p><code>find / -type f -perm 777 -exec/-ok    rm -f &#123;&#125; \;</code>    #删除/root/temp下权限为777的文件</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011141309.png" alt="image-20201011141309008" style="zoom:50%;" />
+
+<p><code>find -type f -name &quot;*.mp3&quot; -exec rm -f &#123;&#125; \;</code>        删除当前目录下后缀名为.mp3的文件</p>
+<h5 id="empty搜索空文件-目录"><a href="#empty搜索空文件-目录" class="headerlink" title="empty搜索空文件/目录"></a>empty搜索空文件/目录</h5><p><code>find /root/temp -type f -empty    </code>#        查找目录下所有空文件      </p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011141629.png" alt="image-20201011141629750" style="zoom:55%;" />
+
+<h4 id="locate"><a href="#locate" class="headerlink" title="locate"></a>locate</h4>   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">locate	#在文件库中查找，快，可能不即时</span><br><span class="line">updatedb	#更新数据库</span><br><span class="line">					-i	忽略大小写</span><br></pre></td></tr></table></figure>
+
+<p><code>locate pwd</code>    查找与pwd相关的所有文件</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011143004.png" alt="image-20201011143004122" style="zoom:60%;" />
+
+<p><code>locate  /etc/sh</code>    #搜索etc目录下所有以sh开头的文件</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011143053.png" alt="image-20201011143053666" style="zoom:70%;" />
+
+
+<h4 id="whereis"><a href="#whereis" class="headerlink" title="whereis"></a>whereis</h4><p>   搜索方法类似locate,比find快。可执行文件b、源代码文件s、帮助文件m在文件系统中的位置。</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011143621.png" alt="image-20201011143621611" style="zoom: 55%;" />
+
+
+
+<h4 id="which"><a href="#which" class="headerlink" title="which"></a>which</h4><p><code>which 命令</code>  显示命令路径(PATH变量)，别名</p>
+<p><code>which ls</code></p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011143214.png" alt="image-20201011143213988" style="zoom:65%;" />
+
+
+<h4 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -i(忽略大小写)	-v 查找不匹配指定字符串的行	</span><br></pre></td></tr></table></figure>
+
+<h5 id="grep规则表达式说明"><a href="#grep规则表达式说明" class="headerlink" title="grep规则表达式说明"></a>grep规则表达式说明</h5><img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011151728.png" alt="image-20201011151728668" style="zoom: 40%;" />
+
+<h5 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h5><p>过滤文件注释行            <code>grep ^[^#] /etc/xinetd.conf</code>或<code>grep -v ^# /etc/xinetd.conf    </code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011145017.png" alt="image-20201011145017754" style="zoom:50%;" />        <img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011145106.png" alt="image-20201011145106365" style="zoom:47%;" /> </p>
+<p><code> cat myfile|grep ^[^u]</code>        查找非u开头的行内容</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011144849.png" alt="image-20201011144848968" style="zoom:60%;" />
+
+<p><code>ps -ef|grep svn</code>        查找指定进程</p>
+<p>加-c参数查找指定进程的个数</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013120155.png" alt="image-20201011145449302" style="zoom:60%;" />
+
+
+
+<p>  <code> cat test.txt | grep -f test2.txt</code>            指定规则文件，其内容含有一个或多个规则样式，让grep查找符合规则条件的文件内容，格式为每行一个规则样式</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011145838.png" alt="image-20201011145838697" style="zoom:60%;" />
+
+<p>按照test2的格式匹配test中符合要求的行</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011145947.png" alt="image-20201011145924293" style="zoom:67%;" />
+
+<p><code>grep -n &#39;linux&#39; test.txt</code>        从文件中查找含有关键字的行并显示行号</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011150308.png" alt="image-20201011150308876" style="zoom:67%;" />
+
+<p><code>cat test.txt | grep -E&quot;ed|at&quot;</code>    #显示包含ed或at的字符行</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011150414.png" alt="image-20201011150414885" style="zoom:67%;" />
+
+
+
+<p><code>grep &#39;[a-z]\&#123;7\&#125;&#39; *.txt</code>    #当前目录下以.txt 结尾的文件中的所有包含至少有7个连续小写字符的字符串所在行，因为在bash中{}有特殊含义使用需要转义</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011150533.png" alt="image-20201011150533406" style="zoom:67%;" />
+
+
+
+<h2 id="权限管理命令"><a href="#权限管理命令" class="headerlink" title="权限管理命令"></a>权限管理命令</h2><h4 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h4>   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod [&#123;ugoa&#125;&#123;+-=&#125;&#123;rwx&#125;][文件或目录]</span><br></pre></td></tr></table></figure>
+<p><code>chmod g-w,o-w test</code>        </p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011152119.png" alt="image-20201011152119326" style="zoom: 50%;" />
+
+<p><code>chmod 777 myfile</code></p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011152229.png" alt="image-20201011152229768" style="zoom: 50%;" />
+
+<p><code>chmod -R</code>            目录权限递归一次修改</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011152615.png" alt="image-20201011152615452" style="zoom: 50%;" />
+
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011152840.png" alt="image-20201011152828702" style="zoom: 50%;" />
+
+<ul>
+<li>目录权限&amp;目录下文件权限不同。</li>
+</ul>
+<h4 id="chown"><a href="#chown" class="headerlink" title="chown"></a>chown</h4>   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown [用户]  [目录/文件]	#改变文件所有者，只有管理员可改</span><br></pre></td></tr></table></figure>
+
+<p><code>chown root myfile</code>    #文件所有者设置为root</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011153143.png" alt="image-20201011153143018" style="zoom:50%;" />
+
+<p><code>chown root:root myfile</code>    #同时修改文件所有者root,所属组root</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011153242.png" alt="image-20201011153242285" style="zoom:50%;" />
+
+<p>useradd<br>passwd</p>
+<h4 id="chgrp-改变文件所属组"><a href="#chgrp-改变文件所属组" class="headerlink" title="chgrp   改变文件所属组"></a>chgrp   改变文件所属组</h4><p>如果用户不是该文件的文件主或超级用户(root)，则不能改变该文件的组。</p>
+<p><strong>默认权限</strong>    创建者=文件所有者    缺省组(默认组，与创建者同名)=文件所有组</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011153520.png" alt="image-20201011153520914" style="zoom:50%;" />
+
+
+
+<h4 id="umask-查看设置缺省权限"><a href="#umask-查看设置缺省权限" class="headerlink" title="umask 查看设置缺省权限"></a>umask 查看设置缺省权限</h4><p><code>umask -S </code>#查看新建目录缺省权限。文件-x，   linux新建文件默认没有执行权限                </p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011153920.png" alt="image-20201011153920664" style="zoom:67%;" />
+
+<p>权限首位0 为特殊权限数字</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011154058.png" alt="image-20201011154058370" style="zoom:67%;" />
+
+
+
+
+
+<h2 id="帮助命令"><a href="#帮助命令" class="headerlink" title="帮助命令"></a>帮助命令</h2><h4 id="man"><a href="#man" class="headerlink" title="man"></a>man</h4><blockquote>
+<p>man 可以查询不同类型的帮助手册，当目标存在多个不同类型的帮助手册时，我们可以指定要查找的手册类型，也可以不指定，此时 man 会搜索所有类型的帮助手册，但是只会按照预定义的顺序展示第一个。预定义的顺序可以使用环境变量 $MANSECT 或配置文件 /usr/local/etc/man_db.conf 中的 SECTION 指令指定，默认为：</p>
+<p><code>1 8 3 2 5 4 9 6 7</code></p>
+<p>1    可执行程序或 Shell 命令</p>
+<p>5    文件格式和约定，如 /etc/passwd</p>
+</blockquote>
+   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">man 命令	#NAME 作用 /选项</span><br><span class="line">		配置文件	#NAME 存放信息  文件格式</span><br></pre></td></tr></table></figure>
+
+<p><code>man 5 passwd</code></p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011155252.png" alt="image-20201011155252025" style="zoom:47%;" />
+
+
+
+<h4 id="whatis"><a href="#whatis" class="headerlink" title="whatis"></a>whatis</h4>   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whatis 命令	#显示作用（简）</span><br></pre></td></tr></table></figure>
+
+<p><code>whatis cp</code></p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011155409.png" alt="image-20201011155409408" style="zoom:50%;" />
+
+
+
+<h4 id="apropos"><a href="#apropos" class="headerlink" title="apropos"></a>apropos</h4>   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apropos 配置文件 	#显示配置文件作用</span><br></pre></td></tr></table></figure>
+
+<p><code>apropos  ntp.conf</code></p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011155537.png" alt="image-20201011155537873" style="zoom:67%;" />
+
+<h4 id="–help-查看常用选项"><a href="#–help-查看常用选项" class="headerlink" title="–help 查看常用选项"></a>–help 查看常用选项</h4><h4 id="info"><a href="#info" class="headerlink" title="info"></a>info</h4><h4 id="help"><a href="#help" class="headerlink" title="help"></a>help</h4><h4 id="date与man-date"><a href="#date与man-date" class="headerlink" title="date与man date"></a>date与man date</h4><p><code>man date</code>        得到日期格式</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011155649.png" alt="image-20201011155649167" style="zoom:67%;" />
+
+<p>根据指定格式MMDDhhmm修改时间</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011155808.png" alt="image-20201011155808566" style="zoom:67%;" />
+
+<p>恢复标准时间        <code>ntpdate pool.ntp.org</code></p>
+<h2 id="用户管理命令"><a href="#用户管理命令" class="headerlink" title="用户管理命令"></a>用户管理命令</h2><h4 id="useradd-amp-passwd"><a href="#useradd-amp-passwd" class="headerlink" title="useradd&amp;passwd"></a>useradd&amp;passwd</h4><p><code>useradd u1</code>添加用户u1        <code>passwd</code>修改密码</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011160305.png" alt="image-20201011160305452" style="zoom:67%;" />
+
+<p>管理员外的普通用户密码需要满足一定复杂度要求</p>
+<h4 id="who"><a href="#who" class="headerlink" title="who"></a>who</h4><p>登录用户信息</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011160458.png" alt="image-20201011160458715" style="zoom:67%;" />
+
+<p>列2为终端号，pts/0-255表示远程/虚拟终端，tty1-7表示本地</p>
+<h4 id="w-详细版who"><a href="#w-详细版who" class="headerlink" title="w(详细版who)"></a>w(详细版who)</h4><img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011160640.png" alt="image-20201011160640190" style="zoom:67%;" />
+
+<p>第一行：开机时间点，已开机22h32分钟，登录用户，平均负载（5/10/15min）</p>
+<h2 id="解压缩命令"><a href="#解压缩命令" class="headerlink" title="解压缩命令"></a>解压缩命令</h2><h4 id="gzip-压缩率大"><a href="#gzip-压缩率大" class="headerlink" title="gzip    (压缩率大)"></a>gzip    (压缩率大)</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.gz</span><br><span class="line">解压1：gunzip FileName.gz</span><br><span class="line">解压2：gzip -d FileName.gz</span><br><span class="line">压缩：gzip FileName</span><br><span class="line"></span><br><span class="line">gzip -rf temp		</span><br><span class="line">gunzip -rf temp或 gzip -drf temp  </span><br><span class="line"><span class="meta">#</span><span class="bash">-r递归压缩，用于压缩目录;-f强制压缩，忽略链接文件警告;-v显示指令执行过程。</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.tar.gz</span><br><span class="line">解压：tar zxvf FileName.tar.gz</span><br><span class="line">压缩：tar zcvf FileName.tar.gz DirName</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.tar</span><br><span class="line">解包：tar -xvf FileName.tar									#-v显示涉及的文件;-f指定压缩文件</span><br><span class="line">打包：tar -cvf FileName.tar DirName	</span><br></pre></td></tr></table></figure>
+
+<h4 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.zip</span><br><span class="line">解压：unzip FileName.zip</span><br><span class="line">压缩：zip FileName.zip DirName</span><br></pre></td></tr></table></figure>
+
+<h4 id="bzip2"><a href="#bzip2" class="headerlink" title="bzip2"></a>bzip2</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.bz2</span><br><span class="line">解压1：bzip2 -d FileName.bz2</span><br><span class="line">解压2：bunzip2 -k FileName.bz2				#-k 解压缩后保留原文件</span><br><span class="line">压缩： bzip2 -z FileName</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.tar.bz2</span><br><span class="line">解压：tar -jxvf FileName.tar.bz2</span><br><span class="line">压缩：tar -jcvf FileName.tar.bz2 DirName</span><br></pre></td></tr></table></figure>
+
+<h2 id="网络命令"><a href="#网络命令" class="headerlink" title="网络命令"></a>网络命令</h2><h4 id="write-用户名"><a href="#write-用户名" class="headerlink" title="write 用户名"></a>write 用户名</h4><p>   “写信/聊天”，ctrl+D保存结束聊天</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011164547.png" alt="image-20201011164547883" style="zoom:67%;" />
+
+<h4 id="wall-广播"><a href="#wall-广播" class="headerlink" title="wall 广播"></a>wall 广播</h4><img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011165011.png" alt="image-20201011165011584" style="zoom:50%;" />
+
+<h4 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h4><h4 id="ifconfig查看网卡配置信息"><a href="#ifconfig查看网卡配置信息" class="headerlink" title="ifconfig查看网卡配置信息"></a>ifconfig查看网卡配置信息</h4><img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011165207.png" alt="image-20201011165207660" style="zoom: 50%;" />
+
+<ul>
+<li><p>ens33是第一块网卡</p>
+</li>
+<li><p>UP（代表网卡开启状态）RUNNING（代表网卡的网线被接上）MULTICAST（支持组播）MTU:1500（最大传输单元）：1500字节</p>
+</li>
+<li><p>inet addr 用来表示网卡的IP地址，此网卡的 IP地址是 192.168.72.88，广播地址， Bcast:192.168.72.255，掩码地址Mask:255.255.255.0 </p>
+</li>
+<li><p>连接类型：Ethernet（以太网）HWaddr（硬件mac地址）</p>
+</li>
+<li><p>接收、发送数据包情况统计</p>
+</li>
+<li><p>接收、发送数据字节数统计信息</p>
+</li>
+<li><p>lo表示本地回环地址，一般用于测试网络程序</p>
+</li>
+</ul>
+<h5 id="启动关闭指定网卡"><a href="#启动关闭指定网卡" class="headerlink" title="启动关闭指定网卡"></a>启动关闭指定网卡</h5><p>练习的时候，ssh登陆linux服务器操作要小心，关闭了就不能开启了，除非你有多网卡。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ifconfig ens33 up</span><br><span class="line">ifconfig ens33 down</span><br></pre></td></tr></table></figure>
+
+<h5 id="为网卡配置ip地址"><a href="#为网卡配置ip地址" class="headerlink" title="为网卡配置ip地址"></a>为网卡配置ip地址</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ifconfig ens33 198.168.8.250		#修改网卡ens33 ip为198.168.8.250</span><br><span class="line">ifconfig ens33 192.168.120.56 netmask 255.255.255.0 </span><br><span class="line"> ifconfig ens33 192.168.120.56 netmask 255.255.255.0 broadcast 192.168.120.255</span><br></pre></td></tr></table></figure>
+
+<h5 id="为网卡配置和删除ipv6地址"><a href="#为网卡配置和删除ipv6地址" class="headerlink" title="为网卡配置和删除ipv6地址"></a>为网卡配置和删除ipv6地址</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ifconfig ens33 add 33ffe:3240:800:1005::2/64</span><br><span class="line">ifconfig ens33 del 33ffe:3240:800:1005::2/64</span><br></pre></td></tr></table></figure>
+
+<h5 id="修改Mac地址"><a href="#修改Mac地址" class="headerlink" title="修改Mac地址"></a>修改Mac地址</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig ens33 hw ether 00:AA:BB:CC:DD:EE</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="mail"><a href="#mail" class="headerlink" title="mail"></a>mail</h4><img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011170701.png" alt="image-20201011170700945" style="zoom:50%;" />
+
+<p>发送邮件 <code>mail 用户名</code></p>
+<p>接收：<code>mail</code> 查看邮件信息后回车显示邮件详情</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011170829.png" alt="image-20201011170829512" style="zoom:67%;" />
+
+<p>看完后ctrl+D保存退出</p>
+<h4 id="last-目前与过去登入系统的用户信息"><a href="#last-目前与过去登入系统的用户信息" class="headerlink" title="last 目前与过去登入系统的用户信息"></a>last 目前与过去登入系统的用户信息</h4><img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011171124.png" alt="image-20201011171124412" style="zoom: 50%;" />
+
+
+
+<h4 id="lastlog特定用户登陆时间"><a href="#lastlog特定用户登陆时间" class="headerlink" title="lastlog特定用户登陆时间"></a>lastlog特定用户登陆时间</h4><p><code>lastlog -u uid</code></p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011171433.png" alt="image-20201011171433068" style="zoom:50%;" />
+
+
+
+<h4 id="traceroute"><a href="#traceroute" class="headerlink" title="traceroute"></a>traceroute</h4><p><code>tarceroute hostname</code></p>
+<h4 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h4><p><code>netstat -rn</code>    #查看本机路由表</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011171904.png" alt="image-20201011171904725" style="zoom:67%;" />
+
+<p><code> netstat -tuln</code>        tcp和udp服务监听</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011172039.png" alt="image-20201011172039429" style="zoom:50%;"/> 
+
+<p><code>netstat -an</code>    #显示所有网络连接</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011172315.png" alt="image-20201011172315583" style="zoom:50%;" />
+
+<ul>
+<li><p>netstat的输出结果可以分为两个部分：</p>
+<p>一个是Active Internet connections，称为有源TCP连接，其中”Recv-Q”和”Send-Q”指的是接收队列和发送队列。这些数字一般都应该是0。如果不是则表示软件包正在队列中堆积。这种情况只能在非常少的情况见到。</p>
+<p>另一个是Active UNIX domain sockets，称为有源Unix域套接口(和网络套接字一样，但是只能用于本机通信，性能可以提高一倍)。</p>
+<p>Proto显示连接使用的协议,RefCnt表示连接到本套接口上的进程号,Types显示套接口的类型,State显示套接口当前的状态,Path表示连接到套接口的其它进程使用的路径名。</p>
+</li>
+<li><p>套接口类型</p>
+<p>-t ：TCP</p>
+<p>-u ：UDP</p>
+<p>-raw ：RAW类型</p>
+<p>–unix ：UNIX域类型</p>
+<p>–ax25 ：AX25类型</p>
+<p>–ipx ：ipx类型</p>
+<p>–netrom ：netrom类型</p>
+</li>
+<li><p><strong>状态说明：</strong></p>
+<p><strong>LISTEN</strong>：侦听来自远方的TCP端口的连接请求</p>
+<p>SYN-SENT：再发送连接请求后等待匹配的连接请求（如果有大量这样的状态包，检查是否中招了）</p>
+<p>SYN-RECEIVED：再收到和发送一个连接请求后等待对方对连接请求的确认（如有大量此状态，估计被flood攻击了）</p>
+<p><strong>ESTABLISHED</strong>：代表一个打开的连接</p>
+<p>FIN-WAIT-1：等待远程TCP连接中断请求，或先前的连接中断请求的确认</p>
+<p>FIN-WAIT-2：从远程TCP等待连接中断请求</p>
+<p>CLOSE-WAIT：等待从本地用户发来的连接中断请求</p>
+<p>CLOSING：等待远程TCP对连接中断的确认</p>
+<p>LAST-ACK：等待原来的发向远程TCP的连接中断请求的确认（不是什么好东西，此项出现，检查是否被攻击）</p>
+<p>TIME-WAIT：等待足够的时间以确保远程TCP接收到连接中断请求的确认</p>
+<p>CLOSED：没有任何连接状态</p>
+</li>
+</ul>
+<h4 id="setup-配置网络-nmtui"><a href="#setup-配置网络-nmtui" class="headerlink" title="setup 配置网络 nmtui"></a><del>setup 配置网络</del> nmtui</h4><p><code>setup</code>在centos7版本里已经没有网络配置选项，使用<code>nmtui</code>进入</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011173835.png" alt="image-20201011173835711" style="zoom:50%;" />
+
+<p>进入编辑</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011174044.png" alt="image-20201011174043984" style="zoom: 40%;" />
+
+<p>回车进入配置网卡</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011174120.png" alt="image-20201011174120060" style="zoom:50%;" />
+
+<p>回到网络编辑界面激活</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011174214.png" alt="image-20201011174214088" style="zoom:50%;" />
+
+
+
+<h4 id="mount-t文件系统-设备文件名"><a href="#mount-t文件系统-设备文件名" class="headerlink" title="mount [-t文件系统]  设备文件名"></a>mount [-t文件系统]  设备文件名</h4><p><code>mount -t 文件系统 设备文件名 挂载点/mnt/xxx</code></p>
+<ol>
+<li><p><code>fdisk -l</code> 查看设备文件名</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011174622.png" alt="image-20201011174621982" style="zoom:67%;" />
+</li>
+<li><p>插入可移动设备(这里用u盘演示)</p>
+<p>出现提示</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011175340.png" alt="image-20201011175340344" style="zoom:50%;" />
+
+<p>关机修改虚拟机设置usb兼容3.1,重启即可</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011175643.png" alt="image-20201011175630756" style="zoom:50%;" />
+
+
+
+</li>
+</ol>
+<p>检查与虚拟机连接状态，若未连接(连接到主机)，</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011174758.png" alt="image-20201011174758836" style="zoom:50%;" />
+
+<p>linux系统不能识别ntfs/exfat文件系统，检查u盘类型(win下查看u盘属性)，安装支持</p>
+<pre><code>mount unknown filesystem type ntfs
+解决：安装支持包
+wget https://tuxera.com/opensource/ntfs-3g_ntfsprogs-2017.3.23.tgz
+tar -zxf ntfs-3g_ntfsprogs-2017.3.23.tgz
+cd ntfs-3g_ntfsprogs-2017.3.23
+./configure;make;make install 
+
+mount -t ntfs-3g 设备文件名 挂载点
+
+exfat
+yum install -y http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm
+yum install exfat-utils fuse-exfat
+mount -t exfat 设备文件名 挂载点</code></pre>
+<p>重新检查分区情况，得到u盘设备文件名</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011180006.png" alt="image-20201011180006769" style="zoom:50%;" />
+
+<p>在/mnt下创建目录空usb来挂载u盘</p>
+<p><code>mount -t ntfs-3g 设备文件名 挂载点</code>     （ntfs）</p>
+<p><code>mount -t exfat /dev/sdb1 /mnt/usb</code>    (exfat)</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011185213.png" alt="image-20201011185213349" style="zoom:67%;" />
+
+<p>可通过挂载点访问u盘</p>
+<p>取消挂载</p>
+<p><code>umount 设备文件名/挂载点</code></p>
+<p>出现的一些问题：</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011180952.png" alt="image-20201011180952149" style="zoom:67%;" />
+
+<p>提示设备错误，连接主机，查看了下u盘属性发现是exfat格式，linux识别不了，上面命令指定的文件系统也不对。好吧，装一下exfat的支持</p>
+<img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011183437.png" alt="image-20201011183437281" style="zoom:67%;" />
+
+<p>报错挂在目标已使用，额实际上已经挂载了，这里出问题的原因是我在另一个终端正在换源造成的，结束后就能正常挂载了</p>
+<h2 id="关机重启命令"><a href="#关机重启命令" class="headerlink" title="关机重启命令"></a>关机重启命令</h2><h4 id="shutdown"><a href="#shutdown" class="headerlink" title="shutdown"></a>shutdown</h4>   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">shutdown -c 取消前一个关机命令</span><br><span class="line">shutdown -h 关机</span><br><span class="line">shutdown -r 重启</span><br></pre></td></tr></table></figure>
+
+<h4 id="halt"><a href="#halt" class="headerlink" title="halt"></a>halt</h4><h4 id="poweroff"><a href="#poweroff" class="headerlink" title="poweroff"></a>poweroff</h4><h4 id="logout"><a href="#logout" class="headerlink" title="logout"></a>logout</h4><h4 id="reboot"><a href="#reboot" class="headerlink" title="reboot"></a>reboot</h4><h4 id="init-0和init-6"><a href="#init-0和init-6" class="headerlink" title="init 0和init 6"></a>init 0和init 6</h4><ul>
+<li><p>系统运行级别</p>
+<p>0关机，1单用户，2不完全多用户，3完全多用户，4未分配，5图形界面，6重启</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat　/etc/inittab</span><br><span class="line">runlevel	#查看当前系统运行级别</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h2 id="其他小问题："><a href="#其他小问题：" class="headerlink" title="其他小问题："></a>其他小问题：</h2><p>终端提示符显示的是-bash-4.2# 而不是root@主机名 + 路径的显示方式原因是root在/root下面的几个配置文件丢失，丢失文件如下：1、.bash_profile2、.bashrc以上这些文件是每个用户都必备的文件。使用以下命令从主默认文件重新拷贝一份配置信息到/root目录下<br>cp /etc/skel/.bashrc /root/</p>
+<p>cp /etc/skel/.bash_profile  /root/</p>
+<p>然后重新登录就恢复正常了。</p>
+<p>检查后发现是因为额我把这部分文件压缩了，解压后再次打开终端就正常了</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/10/10/linux%E5%9F%BA%E7%A1%80-12-%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/" rel="prev" title="linux基础_备份与恢复">
+                  <i class="fa fa-chevron-left"></i> linux基础_备份与恢复
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/10/11/linux%E5%9F%BA%E7%A1%80-2-vim/" rel="next" title="linux基础_2.vim">
+                  linux基础_2.vim <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mij0lb</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
