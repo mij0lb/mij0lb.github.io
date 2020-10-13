@@ -19,13 +19,13 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"mij0lb.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="需要备份的数据 &#x2F;root&#x2F;  &#x2F;home&#x2F;  &#x2F;var&#x2F;spool&#x2F;mail&#x2F;  &#x2F;etc&#x2F;  其他&#x2F;var&#x2F;log等  安装服务的数据（eg.） apache：配置文件，网页主目录，日志文件 myslq：(源码包安装)&#x2F;usr&#x2F;local(或安装目录)&#x2F;mysql&#x2F;data(5.5);(rpm安装)&#x2F;var&#x2F;lib&#x2F;mysql   备份：不放在同一个篮子里—-异地备份 备份策略 完全备份">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux基础_12.备份与恢复">
-<meta property="og:url" content="http://example.com/2020/10/10/linux%E5%9F%BA%E7%A1%80-12-%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/index.html">
+<meta property="og:url" content="http://mij0lb.com/2020/10/10/linux%E5%9F%BA%E7%A1%80-12-%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/index.html">
 <meta property="og:site_name" content="mij0lb&#39;s blog">
 <meta property="og:description" content="需要备份的数据 &#x2F;root&#x2F;  &#x2F;home&#x2F;  &#x2F;var&#x2F;spool&#x2F;mail&#x2F;  &#x2F;etc&#x2F;  其他&#x2F;var&#x2F;log等  安装服务的数据（eg.） apache：配置文件，网页主目录，日志文件 myslq：(源码包安装)&#x2F;usr&#x2F;local(或安装目录)&#x2F;mysql&#x2F;data(5.5);(rpm安装)&#x2F;var&#x2F;lib&#x2F;mysql   备份：不放在同一个篮子里—-异地备份 备份策略 完全备份">
 <meta property="og:locale" content="zh_CN">
@@ -48,7 +48,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201010233029.png">
 
-<link rel="canonical" href="http://example.com/2020/10/10/linux%E5%9F%BA%E7%A1%80-12-%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/">
+<link rel="canonical" href="http://mij0lb.com/2020/10/10/linux%E5%9F%BA%E7%A1%80-12-%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/">
 
 
 <script id="page-configurations">
@@ -183,7 +183,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/10/linux%E5%9F%BA%E7%A1%80-12-%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/">
+    <link itemprop="mainEntityOfPage" href="http://mij0lb.com/2020/10/10/linux%E5%9F%BA%E7%A1%80-12-%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -338,7 +338,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2020/10/10/linux%E5%9F%BA%E7%A1%80-12-%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/" title="linux基础_12.备份与恢复">http://example.com/2020/10/10/linux基础-12-备份与恢复/</a>
+    <a href="http://mij0lb.com/2020/10/10/linux%E5%9F%BA%E7%A1%80-12-%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/" title="linux基础_12.备份与恢复">http://mij0lb.com/2020/10/10/linux基础-12-备份与恢复/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
