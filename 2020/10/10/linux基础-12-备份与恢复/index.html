@@ -22,12 +22,12 @@
     var CONFIG = {"hostname":"mij0lb.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="需要备份的数据 &#x2F;root&#x2F;  &#x2F;home&#x2F;  &#x2F;var&#x2F;spool&#x2F;mail&#x2F;  &#x2F;etc&#x2F;  其他&#x2F;var&#x2F;log等  安装服务的数据（eg.） apache：配置文件，网页主目录，日志文件 myslq：(源码包安装)&#x2F;usr&#x2F;local(或安装目录)&#x2F;mysql&#x2F;data(5.5);(rpm安装)&#x2F;var&#x2F;lib&#x2F;mysql">
+  <meta name="description" content="需要备份的数据 &#x2F;root&#x2F; &#x2F;home&#x2F; &#x2F;var&#x2F;spool&#x2F;mail&#x2F; &#x2F;etc&#x2F; 其他&#x2F;var&#x2F;log等">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux基础_12.备份与恢复">
 <meta property="og:url" content="http://mij0lb.com/2020/10/10/linux%E5%9F%BA%E7%A1%80-12-%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/index.html">
 <meta property="og:site_name" content="mij0lb&#39;s blog">
-<meta property="og:description" content="需要备份的数据 &#x2F;root&#x2F;  &#x2F;home&#x2F;  &#x2F;var&#x2F;spool&#x2F;mail&#x2F;  &#x2F;etc&#x2F;  其他&#x2F;var&#x2F;log等  安装服务的数据（eg.） apache：配置文件，网页主目录，日志文件 myslq：(源码包安装)&#x2F;usr&#x2F;local(或安装目录)&#x2F;mysql&#x2F;data(5.5);(rpm安装)&#x2F;var&#x2F;lib&#x2F;mysql">
+<meta property="og:description" content="需要备份的数据 &#x2F;root&#x2F; &#x2F;home&#x2F; &#x2F;var&#x2F;spool&#x2F;mail&#x2F; &#x2F;etc&#x2F; 其他&#x2F;var&#x2F;log等">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201010233029.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201010233218.png">
@@ -42,7 +42,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011001549.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011001938.png">
 <meta property="article:published_time" content="2020-10-10T09:54:38.000Z">
-<meta property="article:modified_time" content="2020-10-13T08:08:59.724Z">
+<meta property="article:modified_time" content="2020-10-13T08:15:09.276Z">
 <meta property="article:author" content="mij0lb">
 <meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
@@ -213,7 +213,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-13 16:08:59" itemprop="dateModified" datetime="2020-10-13T16:08:59+08:00">2020-10-13</time>
+                <time title="修改时间：2020-10-13 16:15:09" itemprop="dateModified" datetime="2020-10-13T16:15:09+08:00">2020-10-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -237,23 +237,20 @@
 
       
         <h3 id="需要备份的数据"><a href="#需要备份的数据" class="headerlink" title="需要备份的数据"></a>需要备份的数据</h3><ul>
-<li><p>/root/</p>
-</li>
-<li><p>/home/</p>
-</li>
-<li><p>/var/spool/mail/</p>
-</li>
-<li><p>/etc/</p>
-</li>
-<li><p>其他/var/log等</p>
-</li>
+<li>/root/</li>
+<li>/home/</li>
+<li>/var/spool/mail/</li>
+<li>/etc/</li>
+<li>其他/var/log等</li>
+</ul>
+<a id="more"></a>
+
+<ul>
 <li><p>安装服务的数据（eg.）</p>
 <p>apache：配置文件，网页主目录，日志文件</p>
 <p>myslq：(源码包安装)/usr/local(或安装目录)/mysql/data(5.5);(rpm安装)/var/lib/mysql</p>
 </li>
 </ul>
-<a id="more"></a>
-
 <p>备份：不放在同一个篮子里—-异地备份</p>
 <h3 id="备份策略"><a href="#备份策略" class="headerlink" title="备份策略"></a>备份策略</h3><ol>
 <li><p>完全备份</p>
