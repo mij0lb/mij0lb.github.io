@@ -1,245 +1,319 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="zh-CN">
 <head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8">
-	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-	
-	<!-- title -->
-	
-	<title>
-	
-		linux基础_7.shell编程 | 
-	 
-	mij0lb&#39;s blog
-	</title>
-	
-	<!-- keywords,description -->
-	
-		<meta name="keywords" content="渗透测试,linux,Python,算法" />
-	 
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/acorn_32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/acorn_16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-	<!-- favicon -->
-	
-	<link rel="shortcut icon" href="/favicon.ico">
-	
-  
-
-	
 <link rel="stylesheet" href="/css/main.css">
 
-	
-<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
-
-	
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/styles/darcula.min.css">
 
 
-	
-<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/highlight.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
 
-	
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"mij0lb.com","root":"/","scheme":"Muse","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
 
-	
-<script src="https://cdn.jsdelivr.net/npm/jquery-pjax@2.0.1/jquery.pjax.min.js"></script>
+  <meta name="description" content="基础正则表达式正则表达式与通配符区别   正则 通配符{*？-[]}    在文件中匹配符合条件的字符串 匹配符合条件的文件名   包含匹配 完全匹配   grep,awk,sed等命令支持正则 ls，find,cp不支持正则，只能用shell的通配符匹配   完全匹配">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux基础_7.shell编程">
+<meta property="og:url" content="http://mij0lb.com/2020/10/11/linux%E5%9F%BA%E7%A1%80-7-shell%E7%BC%96%E7%A8%8B/index.html">
+<meta property="og:site_name" content="mij0lb&#39;s blog">
+<meta property="og:description" content="基础正则表达式正则表达式与通配符区别   正则 通配符{*？-[]}    在文件中匹配符合条件的字符串 匹配符合条件的文件名   包含匹配 完全匹配   grep,awk,sed等命令支持正则 ls，find,cp不支持正则，只能用shell的通配符匹配   完全匹配">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013093007.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011094008.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011094012.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013094938.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013095042.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011094005.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011094011.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013095652.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013100131.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013100801.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013100957.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013101121.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013101502.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013101645.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013101853.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013102037.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013102102.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013102305.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013110201.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013104559.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013103659.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013103755.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013103943.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013104137.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013104446.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013104713.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013104835.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013105053.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013105423.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013111410.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013111622.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013113327.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013113239.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013114143.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013114833.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013115418.png">
+<meta property="article:published_time" content="2020-10-11T01:23:01.000Z">
+<meta property="article:modified_time" content="2020-10-13T08:14:18.498Z">
+<meta property="article:author" content="mij0lb">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013093007.png">
 
-	
-<script src="/js/main.js"></script>
 
-	
-		
-<script src="https://cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<link rel="canonical" href="http://mij0lb.com/2020/10/11/linux%E5%9F%BA%E7%A1%80-7-shell%E7%BC%96%E7%A8%8B/">
 
-		
-<script src="https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js"></script>
 
-	
-	
-		<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-	
-<meta name="generator" content="Hexo 5.2.0"></head>
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
 
-<body>
-	<header id="header">
-    <a id="title" href="/" class="logo">mij0lb's blog</a>
+  <title>linux基础_7.shell编程 | mij0lb's blog</title>
+  
 
-	<ul id="menu">
-		<li class="menu-item">
-			<a href="/about" class="menu-item-link">ABOUT</a>
-		</li>
-		
-		<li class="menu-item">
-			<a href="https://github.com/wujun234/uid-generator-spring-boot-starter" class="menu-item-link" target="_blank">
-				UidGenerator
-			</a>
-		</li>
-		<li class="menu-item">
-			<a href="https://github.com/wujun234" class="menu-item-link" target="_blank">
-				<i class="fa fa-github fa-2x"></i>
-			</a>
-		</li>
-	</ul>
-</header>
 
-	
-<div id="sidebar">
-	<button id="sidebar-toggle" class="toggle" ><i class="fa fa-arrow-right " aria-hidden="true"></i></button>
-	
-	<div id="site-toc">
-		<input id="search-input" class="search-input" type="text" placeholder="search...">
-		<div id="tree">
-			
 
-			
-							<ul>
-								<li class="file">
-									<a href="/2020/10/11/linux%E5%9F%BA%E7%A1%80-1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
-										linux基础-1-常用命令
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
-									<a href="/2020/10/10/linux%E5%9F%BA%E7%A1%80-10-%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/">
-										linux基础-10-日志管理
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
-									<a href="/2020/10/10/linux%E5%9F%BA%E7%A1%80-11-%E5%90%AF%E5%8A%A8%E7%AE%A1%E7%90%86/">
-										linux基础-11-启动管理
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
-									<a href="/2020/10/10/linux%E5%9F%BA%E7%A1%80-12-%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/">
-										linux基础-12-备份与恢复
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
-									<a href="/2020/10/11/linux%E5%9F%BA%E7%A1%80-2-vim/">
-										linux基础-2-vim
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
-									<a href="/2020/10/11/linux%E5%9F%BA%E7%A1%80-3-%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86/">
-										linux基础-3-用户管理
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
-									<a href="/2020/10/11/linux%E5%9F%BA%E7%A1%80-4-%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/">
-										linux基础-4-权限管理
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
-									<a href="/2020/10/11/linux%E5%9F%BA%E7%A1%80-5-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86/">
-										linux基础-5-文件系统管理
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
-									<a href="/2020/10/11/linux%E5%9F%BA%E7%A1%80-6-shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/">
-										linux基础-6-shell编程基础
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file active">
-									<a href="/2020/10/11/linux%E5%9F%BA%E7%A1%80-7-shell%E7%BC%96%E7%A8%8B/">
-										linux基础-7-shell编程
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
-									<a href="/2020/10/09/linux%E5%9F%BA%E7%A1%80-8-linux%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/">
-										linux基础-8-linux服务管理
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
-									<a href="/2020/10/10/linux%E5%9F%BA%E7%A1%80-9-linux%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86/">
-										linux基础-9-linux系统管理
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
-									<a href="/2020/10/09/vmware-nat%E6%A8%A1%E5%BC%8F%E9%9D%99%E6%80%81ip%E9%85%8D%E7%BD%AE/">
-										vmware-nat模式静态ip配置
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-		</div>
-	</div>
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">mij0lb's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">宁静致远</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
 </div>
 
-	<!-- 引入正文 -->
-	<div id="content">
-		<h1 id="article-title">
 
-	linux基础-7-shell编程
-</h1>
-<div class="article-meta">
-	
-	<span>mij0lb</span>
-	<span>2020-10-11 09:23:01</span>
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-text">基础正则表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E9%80%9A%E9%85%8D%E7%AC%A6%E5%8C%BA%E5%88%AB"><span class="nav-text">正则表达式与通配符区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99"><span class="nav-text">基础正则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E6%88%AA%E5%8F%96%E5%91%BD%E4%BB%A4"><span class="nav-text">字符截取命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cut"><span class="nav-text">cut</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#printf-%E4%B8%A5%E6%A0%BC%E4%B8%8A%E8%AF%B4%E4%B8%8D%E7%AE%97%E6%88%AA%E5%8F%96%E5%91%BD%E4%BB%A4"><span class="nav-text">printf(严格上说不算截取命令)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%89%93%E5%8D%B0"><span class="nav-text">格式化打印</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E7%BB%93%E6%9E%9C%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA"><span class="nav-text">命令结果的格式化输出</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#awk-%E5%A4%8D%E6%9D%82%E7%89%88%E5%88%97%E6%8F%90%E5%8F%96%EF%BC%89"><span class="nav-text">awk(复杂版列提取）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F"><span class="nav-text">格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#awk-amp-cut"><span class="nav-text">awk &amp; cut</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BEGIN%E6%A0%87%E8%AE%B0"><span class="nav-text">BEGIN标记</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E5%88%86%E9%9A%94%E7%AC%A6"><span class="nav-text">指定分隔符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#END%E6%A0%87%E8%AE%B0"><span class="nav-text">END标记</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-text">关系运算符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#awk-amp-grep"><span class="nav-text">awk&amp;grep</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sed"><span class="nav-text">sed</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8C%BA%E5%88%AB%E4%BA%8Evi"><span class="nav-text">区别于vi</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F-1"><span class="nav-text">格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E5%AE%9E%E4%BE%8B"><span class="nav-text">输出实例:</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BE%93%E5%87%BAp"><span class="nav-text">输出p</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A0%E9%99%A4d"><span class="nav-text">删除d</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A1%8C%E5%90%8E%E8%BF%BD%E5%8A%A0a"><span class="nav-text">行后追加a</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A1%8C%E5%89%8D%E6%8F%92%E5%85%A5i"><span class="nav-text">行前插入i</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A1%8C%E6%9B%BF%E6%8D%A2c"><span class="nav-text">行替换c</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A1%8C%E5%86%85%E5%AD%97%E7%AC%A6%E6%9B%BF%E6%8D%A2s"><span class="nav-text">行内字符替换s</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E5%A4%84%E7%90%86%E5%91%BD%E4%BB%A4"><span class="nav-text">字符处理命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%92%E5%BA%8Fsort"><span class="nav-text">排序sort</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%9F%E8%AE%A1wc"><span class="nav-text">统计wc</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E5%88%A4%E6%96%AD"><span class="nav-text">条件判断</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%88%A4%E6%96%AD%E8%AF%AD%E5%8F%A5%E6%A0%BC%E5%BC%8F"><span class="nav-text">常用判断语句格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B%E5%88%A4%E6%96%AD"><span class="nav-text">文件类型判断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90"><span class="nav-text">判断文件权限</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E6%96%87%E4%BB%B6%E4%B9%8B%E9%97%B4%E6%AF%94%E8%BE%83"><span class="nav-text">两个文件之间比较</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%B4%E6%95%B0%E5%A4%A7%E5%B0%8F%E6%AF%94%E8%BE%83"><span class="nav-text">整数大小比较</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%97%E4%B8%B2%E6%AF%94%E8%BE%83"><span class="nav-text">字串比较</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A4%9A%E9%87%8D%E6%9D%A1%E4%BB%B6%E5%88%A4%E6%96%AD"><span class="nav-text">多重条件判断</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6"><span class="nav-text">流程控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#if"><span class="nav-text">if</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%95%E5%88%86%E6%94%AF%E6%A0%BC%E5%BC%8F-if-then"><span class="nav-text">单分支格式 if-then</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%8C%E5%88%86%E6%94%AF-if-then-else"><span class="nav-text">双分支 if-then-else</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E5%88%86%E6%94%AF-if-then-elif-then%E2%80%A6-else"><span class="nav-text">多分支 if-then-elif-then…-else</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#case%E5%A4%9A%E5%88%86%E6%94%AF%E6%9D%A1%E4%BB%B6%E5%88%A4%E6%96%AD%E8%AF%AD%E5%8F%A5"><span class="nav-text">case多分支条件判断语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for%E5%BE%AA%E7%8E%AF"><span class="nav-text">for循环</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E7%A1%AE%E5%AE%9A%E5%BE%AA%E7%8E%AF%E6%AC%A1%E6%95%B0"><span class="nav-text">不确定循环次数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E5%BE%AA%E7%8E%AF%E6%AC%A1%E6%95%B0"><span class="nav-text">指定循环次数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#while%E5%BE%AA%E7%8E%AF%E4%B8%8Euntil%E5%BE%AA%E7%8E%AF"><span class="nav-text">while循环与until循环</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#while%E4%B8%8D%E5%AE%9A-%E6%9D%A1%E4%BB%B6%E5%BE%AA%E7%8E%AF"><span class="nav-text">while不定&#x2F;条件循环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#until%E5%BE%AA%E7%8E%AF"><span class="nav-text">until循环</span></a></li></ol></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">mij0lb</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/mij0lb" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mij0lb" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mij0lb@163.com" title="E-Mail → mailto:mij0lb@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+        <div class="back-to-top animated">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
     
-		<div id="article-categories">
-            
-                
-                    <span>
-                        <i class="fa fa-folder" aria-hidden="true"></i>
-                        <a href="/categories/linux基础/">linux基础</a>
-						
-                    </span>
-                
-            
-		</div>
-    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://mij0lb.com/2020/10/11/linux%E5%9F%BA%E7%A1%80-7-shell%E7%BC%96%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="mij0lb">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mij0lb's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          linux基础_7.shell编程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-10-11 09:23:01" itemprop="dateCreated datePublished" datetime="2020-10-11T09:23:01+08:00">2020-10-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-10-13 16:14:18" itemprop="dateModified" datetime="2020-10-13T16:14:18+08:00">2020-10-13</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/linux%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">linux基础</span></a>
+        </span>
+    </span>
+
+  
 </div>
 
-<div id="article-content">
-	<h2 id="基础正则表达式"><a href="#基础正则表达式" class="headerlink" title="基础正则表达式"></a>基础正则表达式</h2><h3 id="正则表达式与通配符区别"><a href="#正则表达式与通配符区别" class="headerlink" title="正则表达式与通配符区别"></a>正则表达式与通配符区别</h3><table>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="基础正则表达式"><a href="#基础正则表达式" class="headerlink" title="基础正则表达式"></a>基础正则表达式</h2><h3 id="正则表达式与通配符区别"><a href="#正则表达式与通配符区别" class="headerlink" title="正则表达式与通配符区别"></a>正则表达式与通配符区别</h3><table>
 <thead>
 <tr>
 <th>正则</th>
@@ -583,73 +657,135 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">line=$(wc -l t2.sh|cut -f 1 -d &quot; &quot;) #行数</span><br><span class="line">cow= $(cat t2.sh |awk &quot;END&#123;print NF&#125;&quot;)#列数</span><br><span class="line">for((j=0;j&lt;cow;j++))</span><br><span class="line">	do</span><br><span class="line">			for((i=0;i&lt;line;i++))</span><br><span class="line">				do</span><br><span class="line">					echo &quot;$(cut -d &quot; &quot; -f $j t2.sh | sed -n &#x27;$i&#x27;p)&quot;</span><br><span class="line">					echo &quot; &quot;</span><br><span class="line">				done</span><br><span class="line">				echo -e &quot;\n&quot;</span><br><span class="line">	done</span><br></pre></td></tr></table></figure>
 
 
-</div>
-
-
-    <div class="post-guide">
-        <div class="item left">
-            
-        </div>
-        <div class="item right">
-            
-              <a href="/2020/10/11/linux%E5%9F%BA%E7%A1%80-4-%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/">
-                linux基础-4-权限管理
-                <i class="fa fa-angle-right" aria-hidden="true"></i>
-              </a>
-            
-        </div>
     </div>
 
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>mij0lb
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://mij0lb.com/2020/10/11/linux%E5%9F%BA%E7%A1%80-7-shell%E7%BC%96%E7%A8%8B/" title="linux基础_7.shell编程">http://mij0lb.com/2020/10/11/linux基础-7-shell编程/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/10/11/linux%E5%9F%BA%E7%A1%80-4-%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/" rel="prev" title="linux基础_4.权限管理">
+                  <i class="fa fa-chevron-left"></i> linux基础_4.权限管理
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
 
 
-	<div id="vcomments"></div>
 
+
+
+
+      
 
 <script>
-	
-		// 评论
-		new Valine({
-			av: AV,
-			el: '#vcomments',
-			notify: false,
-			verify: false,
-			path: window.location.pathname,
-			appId: '',
-			appKey: '',
-			placeholder: '请输入评论',
-			avatar: 'retro',
-			recordIP: false
-		})
-	
-	
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
 </script>
-	</div>
-	<div id="footer">
-	<p>
-	©2019-<span id="footerYear"></span> 
-	<a href="/">mij0lb</a> 
-	
-	
-		|
-		<span id="busuanzi_container_site_pv">
-			pv
-			<span id="busuanzi_value_site_pv"></span>
-		</span>
-		|
-		<span id="busuanzi_container_site_uv"> 
-			uv
-			<span id="busuanzi_value_site_uv"></span>
-		</span>
-	
-	<br>
-	Theme <a href="//github.com/wujun234/hexo-theme-tree" target="_blank">Tree</a>
-	by <a href="//github.com/wujun234" target="_blank">WuJun</a>
-	Powered by <a href="//hexo.io" target="_blank">Hexo</a>
-	</p>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mij0lb</span>
 </div>
-<script type="text/javascript"> 
-	document.getElementById('footerYear').innerHTML = new Date().getFullYear() + '';
-</script>
-	<button id="totop-toggle" class="toggle"><i class="fa fa-angle-double-up" aria-hidden="true"></i></button>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
 </body>
 </html>

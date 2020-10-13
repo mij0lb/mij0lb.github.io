@@ -1,245 +1,370 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="zh-CN">
 <head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8">
-	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-	
-	<!-- title -->
-	
-	<title>
-	
-		linux基础_1.常用命令 | 
-	 
-	mij0lb&#39;s blog
-	</title>
-	
-	<!-- keywords,description -->
-	
-		<meta name="keywords" content="渗透测试,linux,Python,算法" />
-	 
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/acorn_32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/acorn_16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-	<!-- favicon -->
-	
-	<link rel="shortcut icon" href="/favicon.ico">
-	
-  
-
-	
 <link rel="stylesheet" href="/css/main.css">
 
-	
-<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
-
-	
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/styles/darcula.min.css">
 
 
-	
-<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/highlight.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
 
-	
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"mij0lb.com","root":"/","scheme":"Muse","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
 
-	
-<script src="https://cdn.jsdelivr.net/npm/jquery-pjax@2.0.1/jquery.pjax.min.js"></script>
+  <meta name="description" content="目录处理命令ls">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux基础_1.常用命令">
+<meta property="og:url" content="http://mij0lb.com/2020/10/11/linux%E5%9F%BA%E7%A1%80-1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:site_name" content="mij0lb&#39;s blog">
+<meta property="og:description" content="目录处理命令ls">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011104521.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011104543.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011105048.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011104656.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011105801.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011110231.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011110430.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011110802.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011111141.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011111700.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011111737.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011113105.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011113204.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011120135.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011120136.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011121001.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011131402.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011123658.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011123815.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011125422.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011133439.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011131601.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011133006.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011130126.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011130016.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011130409.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011134435.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011135149.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011134759.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011135639.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011140110.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011140540.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011141309.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011141629.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011143004.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011143053.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011143621.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011143214.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011151728.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011145017.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011145106.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011144849.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201013120155.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011145838.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011145947.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011150308.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011150414.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011150533.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011152119.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011152229.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011152615.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011152840.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011153143.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011153242.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011153520.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011153920.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011154058.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011155252.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011155409.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011155537.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011155649.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011155808.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011160305.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011160458.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011160640.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011164547.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011165011.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011165207.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011170701.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011170829.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011171124.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011171433.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011171904.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011172039.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011172315.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011173835.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011174044.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011174120.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011174214.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011174622.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011175340.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011175643.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011174758.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011180006.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011185213.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011180952.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011183437.png">
+<meta property="article:published_time" content="2020-10-11T01:21:08.000Z">
+<meta property="article:modified_time" content="2020-10-13T08:13:02.954Z">
+<meta property="article:author" content="mij0lb">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011104521.png">
 
-	
-<script src="/js/main.js"></script>
 
-	
-		
-<script src="https://cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<link rel="canonical" href="http://mij0lb.com/2020/10/11/linux%E5%9F%BA%E7%A1%80-1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
 
-		
-<script src="https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js"></script>
 
-	
-	
-		<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-	
-<meta name="generator" content="Hexo 5.2.0"></head>
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
 
-<body>
-	<header id="header">
-    <a id="title" href="/" class="logo">mij0lb's blog</a>
+  <title>linux基础_1.常用命令 | mij0lb's blog</title>
+  
 
-	<ul id="menu">
-		<li class="menu-item">
-			<a href="/about" class="menu-item-link">ABOUT</a>
-		</li>
-		
-		<li class="menu-item">
-			<a href="https://github.com/wujun234/uid-generator-spring-boot-starter" class="menu-item-link" target="_blank">
-				UidGenerator
-			</a>
-		</li>
-		<li class="menu-item">
-			<a href="https://github.com/wujun234" class="menu-item-link" target="_blank">
-				<i class="fa fa-github fa-2x"></i>
-			</a>
-		</li>
-	</ul>
-</header>
 
-	
-<div id="sidebar">
-	<button id="sidebar-toggle" class="toggle" ><i class="fa fa-arrow-right " aria-hidden="true"></i></button>
-	
-	<div id="site-toc">
-		<input id="search-input" class="search-input" type="text" placeholder="search...">
-		<div id="tree">
-			
 
-			
-							<ul>
-								<li class="file active">
-									<a href="/2020/10/11/linux%E5%9F%BA%E7%A1%80-1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
-										linux基础-1-常用命令
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
-									<a href="/2020/10/10/linux%E5%9F%BA%E7%A1%80-10-%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/">
-										linux基础-10-日志管理
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
-									<a href="/2020/10/10/linux%E5%9F%BA%E7%A1%80-11-%E5%90%AF%E5%8A%A8%E7%AE%A1%E7%90%86/">
-										linux基础-11-启动管理
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
-									<a href="/2020/10/10/linux%E5%9F%BA%E7%A1%80-12-%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/">
-										linux基础-12-备份与恢复
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
-									<a href="/2020/10/11/linux%E5%9F%BA%E7%A1%80-2-vim/">
-										linux基础-2-vim
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
-									<a href="/2020/10/11/linux%E5%9F%BA%E7%A1%80-3-%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86/">
-										linux基础-3-用户管理
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
-									<a href="/2020/10/11/linux%E5%9F%BA%E7%A1%80-4-%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/">
-										linux基础-4-权限管理
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
-									<a href="/2020/10/11/linux%E5%9F%BA%E7%A1%80-5-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86/">
-										linux基础-5-文件系统管理
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
-									<a href="/2020/10/11/linux%E5%9F%BA%E7%A1%80-6-shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/">
-										linux基础-6-shell编程基础
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
-									<a href="/2020/10/11/linux%E5%9F%BA%E7%A1%80-7-shell%E7%BC%96%E7%A8%8B/">
-										linux基础-7-shell编程
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
-									<a href="/2020/10/09/linux%E5%9F%BA%E7%A1%80-8-linux%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/">
-										linux基础-8-linux服务管理
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
-									<a href="/2020/10/10/linux%E5%9F%BA%E7%A1%80-9-linux%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86/">
-										linux基础-9-linux系统管理
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
-									<a href="/2020/10/09/vmware-nat%E6%A8%A1%E5%BC%8F%E9%9D%99%E6%80%81ip%E9%85%8D%E7%BD%AE/">
-										vmware-nat模式静态ip配置
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-		</div>
-	</div>
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">mij0lb's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">宁静致远</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
 </div>
 
-	<!-- 引入正文 -->
-	<div id="content">
-		<h1 id="article-title">
 
-	linux基础-1-常用命令
-</h1>
-<div class="article-meta">
-	
-	<span>mij0lb</span>
-	<span>2020-10-11 09:21:08</span>
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E5%A4%84%E7%90%86%E5%91%BD%E4%BB%A4"><span class="nav-text">目录处理命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ls"><span class="nav-text">ls</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mkdir%E5%92%8Crmdir"><span class="nav-text">mkdir和rmdir</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pwd%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95"><span class="nav-text">pwd显示当前目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cp%E6%8B%B7%E8%B4%9D"><span class="nav-text">cp拷贝</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rm"><span class="nav-text">rm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ln%E9%93%BE%E6%8E%A5"><span class="nav-text">ln链接</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A1%AC%E9%93%BE%E6%8E%A5%E5%AE%9E%E4%BE%8B"><span class="nav-text">创建一个硬链接实例</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E8%BD%AF%E9%93%BE%E6%8E%A5%E5%AE%9E%E4%BE%8B"><span class="nav-text">创建一个软链接实例</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E4%BD%9C%E7%94%A8"><span class="nav-text">目录作用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86%E5%91%BD%E4%BB%A4"><span class="nav-text">文件处理命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#find"><span class="nav-text">find</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%87%E4%BB%B6name%E6%88%96%E6%AD%A3%E5%88%99%E5%8C%B9%E9%85%8Dregex"><span class="nav-text">文件name或正则匹配regex</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%B9%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%8C%B9%E9%85%8Dtype"><span class="nav-text">根据类型匹配type</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%B9%E6%8D%AE%E6%96%87%E4%BB%B6%E5%A4%A7%E5%B0%8F%E5%8C%B9%E9%85%8Dsize"><span class="nav-text">根据文件大小匹配size</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%97%B6%E9%97%B4%E6%88%B3%E6%A3%80%E7%B4%A2-a-c-m-min-time"><span class="nav-text">文件时间戳检索[a&#x2F;c&#x2F;m]min&#x2F;time</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E5%8C%B9%E9%85%8D%E6%96%87%E4%BB%B6"><span class="nav-text">删除匹配文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%B9%E6%8D%AEperm-%E6%9D%83%E9%99%90-user-group%E5%8C%B9%E9%85%8D"><span class="nav-text">根据perm(权限),user,group匹配</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E6%96%87%E4%BB%B6%E5%90%8E%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4-exec-ok"><span class="nav-text">搜索文件后执行命令 exec&#x2F;ok</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#empty%E6%90%9C%E7%B4%A2%E7%A9%BA%E6%96%87%E4%BB%B6-%E7%9B%AE%E5%BD%95"><span class="nav-text">empty搜索空文件&#x2F;目录</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#locate"><span class="nav-text">locate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#whereis"><span class="nav-text">whereis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#which"><span class="nav-text">which</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#grep"><span class="nav-text">grep</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#grep%E8%A7%84%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AF%B4%E6%98%8E"><span class="nav-text">grep规则表达式说明</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B"><span class="nav-text">实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4"><span class="nav-text">权限管理命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#chmod"><span class="nav-text">chmod</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chown"><span class="nav-text">chown</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chgrp-%E6%94%B9%E5%8F%98%E6%96%87%E4%BB%B6%E6%89%80%E5%B1%9E%E7%BB%84"><span class="nav-text">chgrp   改变文件所属组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#umask-%E6%9F%A5%E7%9C%8B%E8%AE%BE%E7%BD%AE%E7%BC%BA%E7%9C%81%E6%9D%83%E9%99%90"><span class="nav-text">umask 查看设置缺省权限</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%AE%E5%8A%A9%E5%91%BD%E4%BB%A4"><span class="nav-text">帮助命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#man"><span class="nav-text">man</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#whatis"><span class="nav-text">whatis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#apropos"><span class="nav-text">apropos</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%93help-%E6%9F%A5%E7%9C%8B%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9"><span class="nav-text">–help 查看常用选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#info"><span class="nav-text">info</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#help"><span class="nav-text">help</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#date%E4%B8%8Eman-date"><span class="nav-text">date与man date</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4"><span class="nav-text">用户管理命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#useradd-amp-passwd"><span class="nav-text">useradd&amp;passwd</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#who"><span class="nav-text">who</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#w-%E8%AF%A6%E7%BB%86%E7%89%88who"><span class="nav-text">w(详细版who)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%8E%8B%E7%BC%A9%E5%91%BD%E4%BB%A4"><span class="nav-text">解压缩命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#gzip-%E5%8E%8B%E7%BC%A9%E7%8E%87%E5%A4%A7"><span class="nav-text">gzip    (压缩率大)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tar"><span class="nav-text">tar</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zip"><span class="nav-text">zip</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bzip2"><span class="nav-text">bzip2</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">网络命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#write-%E7%94%A8%E6%88%B7%E5%90%8D"><span class="nav-text">write 用户名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#wall-%E5%B9%BF%E6%92%AD"><span class="nav-text">wall 广播</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ping"><span class="nav-text">ping</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ifconfig%E6%9F%A5%E7%9C%8B%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF"><span class="nav-text">ifconfig查看网卡配置信息</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E5%85%B3%E9%97%AD%E6%8C%87%E5%AE%9A%E7%BD%91%E5%8D%A1"><span class="nav-text">启动关闭指定网卡</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BA%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AEip%E5%9C%B0%E5%9D%80"><span class="nav-text">为网卡配置ip地址</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BA%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE%E5%92%8C%E5%88%A0%E9%99%A4ipv6%E5%9C%B0%E5%9D%80"><span class="nav-text">为网卡配置和删除ipv6地址</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9Mac%E5%9C%B0%E5%9D%80"><span class="nav-text">修改Mac地址</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mail"><span class="nav-text">mail</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#last-%E7%9B%AE%E5%89%8D%E4%B8%8E%E8%BF%87%E5%8E%BB%E7%99%BB%E5%85%A5%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF"><span class="nav-text">last 目前与过去登入系统的用户信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lastlog%E7%89%B9%E5%AE%9A%E7%94%A8%E6%88%B7%E7%99%BB%E9%99%86%E6%97%B6%E9%97%B4"><span class="nav-text">lastlog特定用户登陆时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#traceroute"><span class="nav-text">traceroute</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#netstat"><span class="nav-text">netstat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#setup-%E9%85%8D%E7%BD%AE%E7%BD%91%E7%BB%9C-nmtui"><span class="nav-text">setup 配置网络 nmtui</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mount-t%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F-%E8%AE%BE%E5%A4%87%E6%96%87%E4%BB%B6%E5%90%8D"><span class="nav-text">mount [-t文件系统]  设备文件名</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E6%9C%BA%E9%87%8D%E5%90%AF%E5%91%BD%E4%BB%A4"><span class="nav-text">关机重启命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#shutdown"><span class="nav-text">shutdown</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#halt"><span class="nav-text">halt</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#poweroff"><span class="nav-text">poweroff</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#logout"><span class="nav-text">logout</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reboot"><span class="nav-text">reboot</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#init-0%E5%92%8Cinit-6"><span class="nav-text">init 0和init 6</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%B0%8F%E9%97%AE%E9%A2%98"><span class="nav-text">其他小问题</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">mij0lb</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/mij0lb" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mij0lb" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mij0lb@163.com" title="E-Mail → mailto:mij0lb@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+        <div class="back-to-top animated">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
     
-		<div id="article-categories">
-            
-                
-                    <span>
-                        <i class="fa fa-folder" aria-hidden="true"></i>
-                        <a href="/categories/linux基础/">linux基础</a>
-						
-                    </span>
-                
-            
-		</div>
-    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://mij0lb.com/2020/10/11/linux%E5%9F%BA%E7%A1%80-1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="mij0lb">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mij0lb's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          linux基础_1.常用命令
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-10-11 09:21:08" itemprop="dateCreated datePublished" datetime="2020-10-11T09:21:08+08:00">2020-10-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-10-13 16:13:02" itemprop="dateModified" datetime="2020-10-13T16:13:02+08:00">2020-10-13</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/linux%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">linux基础</span></a>
+        </span>
+    </span>
+
+  
 </div>
 
-<div id="article-content">
-	<h3 id="目录处理命令"><a href="#目录处理命令" class="headerlink" title="目录处理命令"></a>目录处理命令</h3><h4 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h4><img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011104521.png" alt="image-20201011104521670" style="zoom: 50%;" />
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="目录处理命令"><a href="#目录处理命令" class="headerlink" title="目录处理命令"></a>目录处理命令</h3><h4 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h4><img src="https://cdn.jsdelivr.net/gh/mij0lb/PictureBed/BlogImg20201011104521.png" alt="image-20201011104521670" style="zoom: 50%;" />
 
 <a id="more"></a>
 
@@ -794,78 +919,138 @@ mount -t exfat 设备文件名 挂载点</code></pre>
 <p>然后重新登录就恢复正常了。</p>
 <p>检查后发现是因为额我把这部分文件压缩了，解压后再次打开终端就正常了</p>
 
-</div>
-
-
-    <div class="post-guide">
-        <div class="item left">
-            
-              <a href="/2020/10/11/linux%E5%9F%BA%E7%A1%80-2-vim/">
-                  <i class="fa fa-angle-left" aria-hidden="true"></i>
-                  linux基础-2-vim
-              </a>
-            
-        </div>
-        <div class="item right">
-            
-              <a href="/2020/10/10/linux%E5%9F%BA%E7%A1%80-12-%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/">
-                linux基础-12-备份与恢复
-                <i class="fa fa-angle-right" aria-hidden="true"></i>
-              </a>
-            
-        </div>
     </div>
 
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>mij0lb
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://mij0lb.com/2020/10/11/linux%E5%9F%BA%E7%A1%80-1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="linux基础_1.常用命令">http://mij0lb.com/2020/10/11/linux基础-1-常用命令/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/10/10/linux%E5%9F%BA%E7%A1%80-12-%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/" rel="prev" title="linux基础_12.备份与恢复">
+                  <i class="fa fa-chevron-left"></i> linux基础_12.备份与恢复
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/10/11/linux%E5%9F%BA%E7%A1%80-2-vim/" rel="next" title="linux基础_2.vim">
+                  linux基础_2.vim <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
 
 
-	<div id="vcomments"></div>
 
+
+
+
+      
 
 <script>
-	
-		// 评论
-		new Valine({
-			av: AV,
-			el: '#vcomments',
-			notify: false,
-			verify: false,
-			path: window.location.pathname,
-			appId: '',
-			appKey: '',
-			placeholder: '请输入评论',
-			avatar: 'retro',
-			recordIP: false
-		})
-	
-	
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
 </script>
-	</div>
-	<div id="footer">
-	<p>
-	©2019-<span id="footerYear"></span> 
-	<a href="/">mij0lb</a> 
-	
-	
-		|
-		<span id="busuanzi_container_site_pv">
-			pv
-			<span id="busuanzi_value_site_pv"></span>
-		</span>
-		|
-		<span id="busuanzi_container_site_uv"> 
-			uv
-			<span id="busuanzi_value_site_uv"></span>
-		</span>
-	
-	<br>
-	Theme <a href="//github.com/wujun234/hexo-theme-tree" target="_blank">Tree</a>
-	by <a href="//github.com/wujun234" target="_blank">WuJun</a>
-	Powered by <a href="//hexo.io" target="_blank">Hexo</a>
-	</p>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mij0lb</span>
 </div>
-<script type="text/javascript"> 
-	document.getElementById('footerYear').innerHTML = new Date().getFullYear() + '';
-</script>
-	<button id="totop-toggle" class="toggle"><i class="fa fa-angle-double-up" aria-hidden="true"></i></button>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
 </body>
 </html>
